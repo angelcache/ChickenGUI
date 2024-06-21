@@ -1,4 +1,4 @@
-
+import javax.swing.JFrame;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,7 +27,8 @@ public class Main {
         another way is to use JFrame as a parent class to a child class     
         */
 
-        new MyFrame();
+        MyFrame frame = new MyFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 }
