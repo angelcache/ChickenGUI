@@ -1,9 +1,9 @@
-import java.awt.BorderLayout;
+//import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class Main {
@@ -72,7 +72,7 @@ public class Main {
          *      north + south: horizontally [can use north as title and south as footer]
          *      west + east: vertically [can use west or east as sidebars / navigation bars]
          *      center: to size of frame [used as main body of your program]
-         */
+        
 
         // Let's create a new frame to test out border layouts
         JFrame frame2 = new JFrame();
@@ -133,21 +133,92 @@ public class Main {
         panel5.add(panel9, BorderLayout.SOUTH);
         panel5.add(panel10, BorderLayout.CENTER);
         //-----------------------------------------------------------------------------------//
+        */
 
         /* Layout Manager = Defines natural layout for components within a container
          * FlowLayout [second type] = places components in row, sized at preffered size. If
          *                            horizontal space in container too small, FlowLayout
          *                            class uses next available row.
-         */
+        
 
          JFrame frame3 = new JFrame();
          frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          frame3.setSize(500, 500);
-         frame3.setLayout(new FlowLayout());
+         frame3.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); // can set an allignment, default: CENTER, left: LEADING, right: TRAILING
+         
+         JPanel panel = new JPanel();
+         panel.setPreferredSize(new Dimension(250,250));
+         panel.setBackground(Color.lightGray);
+         panel.setLayout(new FlowLayout()); // by default, panels already use a flowlayout
+
+         // with flow layouts, when it runs out of room in the first row, components pushed down to next row
+         panel.add(new JButton("1"));
+         panel.add(new JButton("2"));
+         panel.add(new JButton("3"));
+         panel.add(new JButton("4"));
+         panel.add(new JButton("5"));
+         panel.add(new JButton("6"));
+         panel.add(new JButton("7"));
+         panel.add(new JButton("8"));
+         panel.add(new JButton("9"));
+
+         frame3.add(panel);
          frame3.setVisible(true);
 
-         frame3.add(new JButton("1"));
+        /* Layout Manger = Defines the natural layout for components with a cotnainer
+          * Grid Layout [third type] = places components in grid of cells. Each component takes all available space within cell,
+          *                            and each cell is the same size.
+        
+        
+        JFrame frame4 = new JFrame();
+        frame4.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame4.setSize(500,500);
+        frame4.setLayout(new GridLayout(3,3, 10, 10)); // first colum is amount of rows, second is amount of columns
 
+        frame4.add(new JButton("1"));
+        frame4.add(new JButton("2"));
+        frame4.add(new JButton("3"));
+        frame4.add(new JButton("4"));
+        frame4.add(new JButton("5"));
+        frame4.add(new JButton("6"));
+        frame4.add(new JButton("7"));
+        frame4.add(new JButton("8"));
+        frame4.add(new JButton("9"));
+          
+        frame4.setVisible(true);
+        */
+
+        /* JLayered Pane = Swing container that provides a third dimension for positioning components eg. depth, Z-index*/
+
+        JLabel label1 = new JLabel();
+        label1.setOpaque(true); // so we can see label
+        label1.setBackground(Color.RED);
+        label1. setBounds(50,50,200,200);
+
+        JLabel label2 = new JLabel();
+        label2.setOpaque(true); 
+        label2.setBackground(Color.GREEN);
+        label2. setBounds(100,100,200,200);
+
+        JLabel label3 = new JLabel();
+        label3.setOpaque(true); 
+        label3.setBackground(Color.BLUE);
+        label3. setBounds(150,150,200,200);
+
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setBounds(0, 0, 500, 500);
+
+        // can change the order --> there is a name to each layer -> default, palette, modal, popup, drag
+        layeredPane.add(label1, Integer.valueOf(0)); // there is associate number for each layer
+        layeredPane.add(label2, Integer.valueOf(2)); // the higher the number, the higher it is
+        layeredPane.add(label3, Integer.valueOf(1));
+
+        JFrame frame5 = new JFrame("JLayeredPane");
+        frame5.add(layeredPane);
+        frame5.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame5.setSize(new Dimension(500,500));
+        frame.setLayout(null);
+        frame5.setVisible(true);
         
     }
 }
