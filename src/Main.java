@@ -1,9 +1,5 @@
 //import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class Main {
@@ -188,7 +184,7 @@ public class Main {
         frame4.setVisible(true);
         */
 
-        /* JLayered Pane = Swing container that provides a third dimension for positioning components eg. depth, Z-index*/
+        /* JLayered Pane = Swing container that provides a third dimension for positioning components eg. depth, Z-index
 
         JLabel label1 = new JLabel();
         label1.setOpaque(true); // so we can see label
@@ -219,6 +215,9 @@ public class Main {
         frame5.setSize(new Dimension(500,500));
         frame.setLayout(null);
         frame5.setVisible(true);
+        */
+
+        LaunchPage page = new LaunchPage();
         
     }
 }
