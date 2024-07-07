@@ -55,7 +55,7 @@ public class Main {
         // label.setBounds(0, 0, 200, 200); // sets where text goes
         // panelThree.add(label); // adds text + image to the panel
         
-        MyFrame frame = new MyFrame();
+        ChickenGui frame = new ChickenGui();
         frame.add(wallShadow);
         frame.add(wall);
         frame.add(greenForeground);
@@ -217,7 +217,39 @@ public class Main {
         frame5.setVisible(true);
         */
 
-        LaunchPage page = new LaunchPage();
+        //LaunchPage page = new LaunchPage(); Used to practice making a new window
+
+        /* JOptionPane = pop up a standard dialog box that promts users for a value or informs them of somehthing. */
+
+        /* Basic Option Panes */
+        //JOptionPane.showMessageDialog(null, "Hi there!", "FirstPane", JOptionPane.PLAIN_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "Hello to whom this may concern!", "FirstPane", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "Hello?", "FirstPane", JOptionPane.QUESTION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "HEY WATCH OUT!", "FirstPane", JOptionPane.WARNING_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "H-h-h-HIIIJSDIIUSDIFJI!", "FirstPane", JOptionPane.ERROR_MESSAGE);
         
+        /* Show confirm dialogue has a yes, no and cancel button
+           Yes returns 0, No returns 1, cancel returns 2 
+        */
+        //int answer = JOptionPane.showConfirmDialog(null, "Do you like chicks?", "Chicken", JOptionPane.YES_NO_CANCEL_OPTION);
+        
+        /* Show Input Dialogue: allows user to input something */
+        //String name = JOptionPane.showInputDialog("What is your name?");
+
+        /* Last Option Pane: combines all the rest to one 
+        String[] responses = {"No, you're awesome!", "Thank you!", "*blush*", "HEHEHE"}; // array of options
+        ImageIcon icon = new ImageIcon("complimented.gif");
+        JOptionPane.showOptionDialog(null, 
+                                    "you are awesome!", 
+                                    "secret message", 
+                                    JOptionPane.YES_NO_CANCEL_OPTION, 
+                                    JOptionPane.INFORMATION_MESSAGE, 
+                                    icon, 
+                                    responses, 
+                                    0);
+        */
+
+        /* JTextField =  A GUI textbox component used to add, set, or get text eg. user can type out password*/
+        //TextFields textfield = new TextFields();
     }
 }

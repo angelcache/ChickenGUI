@@ -1,10 +1,16 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//import javax.swing.JButton;
+//import javax.swing.JFrame;
 
-public class LaunchPage implements ActionListener {
-    /* In this class, we learn how to open up a new window */
+public class LaunchPage /*implements ActionListener*/ {
+    /* In this class, we learn how to open up a new window 
+     * To sum it up: create an instance of class that contains instance of class you want to appear
+     * Then set it up for some sort of event to trigger it --> in this case, we used a button, there
+     * are other ways, typically need a way for it to be instantiated
+    */
+
+    /* 
     JFrame frame = new JFrame();
     JButton myButton = new JButton("New Window");
 
@@ -29,4 +35,6 @@ public class LaunchPage implements ActionListener {
         }
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
+    */
 }
+
