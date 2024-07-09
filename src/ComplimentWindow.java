@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 // import javax.swing.JLabel;
 
 public class ComplimentWindow {
-    // This class is part of the Chicken GUI, it gives you multiple options to compliment the chicken
+    // This class is part of the Chicken GUI, it gives you multiple options to compliment the chicken, used JOptionPane
 
     int answer;
     
@@ -28,11 +28,11 @@ public class ComplimentWindow {
     public int Result() {
         switch (answer) {
             case 0:
-                return 0; // 0 is bad
+                return 0; // 0 is bad option
             case 1:
-                return 1; // 1 is good
+                return 1; // 1 is good option
             default:
-                return 2; // 2 is good
+                return 2; // 2 is bad option
         }
     }
     

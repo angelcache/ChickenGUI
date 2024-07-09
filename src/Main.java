@@ -250,6 +250,22 @@ public class Main {
         */
 
         /* JTextField =  A GUI textbox component used to add, set, or get text eg. user can type out password*/
-        //TextFields textfield = new TextFields();
+        //TestFrame textfield = new TestFrame();
+
+        /* Checkboxes */
+        // TestFrame checkbox = new TestFrame();
+
+        /* JRadioButton = One or more buttons in a grouping in which only 1 may be selected per group*/
+        // TestFrame buttons = new TestFrame();
+
+        /* JComboBox = a component that combines a button or editable field and a drop-down list */
+        // TestFrame comboBox = new TestFrame();
+
+        /* JSlider = GUI component that lets user enter a value by using an adjustable sliding knob on a track */
+        //TestFrame slide = new TestFrame();
+
+        /* Progress bar = Visual adi to let the user know that an operation is proceding*/
+        TestFrame progressBar = new TestFrame();
+
     }
 }
