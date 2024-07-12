@@ -19,13 +19,17 @@ public class ChickenGui extends JFrame implements ActionListener {
     // implement adds a method from ActionListener
 
     JButton friendButton;
-    JButton complimentButton;
-    JButton foodButton;
-    JButton resetButton;
     JLabel friendLabel; // label that makes friend pop up after clicking button to hang out
+
+    JButton complimentButton;
     JLabel complimentSuccessLabel;
     JLabel complimentFailLabel;
+
+    JButton foodButton;
     JLabel foodLabel;
+
+    JButton resetButton;
+    
     JLabel objective; // label that has the objective of GUI which is to make chicken happy
     JLabel goodEnding;
     JLabel badEnding;
@@ -49,7 +53,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         friendButton.setBorder(BorderFactory.createEtchedBorder()); // gives a 3d effect to the button
         this.add(friendButton); 
 
-        /* display a label on our frame after clicking a button */
+        /* display a label on our frame after clicking friend button */
         friendLabel = new JLabel();
         ImageIcon friend = new ImageIcon("friend.gif");
         friendLabel.setIcon(friend);
@@ -119,11 +123,11 @@ public class ChickenGui extends JFrame implements ActionListener {
         this.add(resetButton);
         resetButton.addActionListener(this);
 
-        /* JLabel = GUI display area for a string of text, an image, or both */
+        /* Creating the Objective Label */
         objective = new JLabel(); // creates label
         objective.setText("make chicken happy :)"); // set text of label
 
-        /* customizing text of JLabel */
+        /* customizing text of Objective JLabel */
         objective.setHorizontalTextPosition(JLabel.CENTER); // set text LEFT, CENTER, RIGHT of ImageIcon
         objective.setVerticalTextPosition(JLabel.TOP); // set text TOP,CENTER,BOTTOM of ImageIcon
         objective.setForeground(new Color(0x9E6B1D)); // sets color of text
@@ -135,14 +139,14 @@ public class ChickenGui extends JFrame implements ActionListener {
         objective.setVerticalAlignment(JLabel.CENTER); // set vertical position of icon + text within label
         objective.setHorizontalAlignment(JLabel.CENTER); // set horizontal position of icon + text within label
         
-        /* add image to JLabel */
+        /* add sad chicken image to Objective */
         ImageIcon chicken = new ImageIcon("sadchick.png"); // creates image
         objective.setIcon(chicken); // adds it to JLabel
         // creating a border
         Border border = BorderFactory.createLineBorder(new Color(0xEEE7D0), 30);
         objective.setBorder(border);
         
-        /* Ending Jlabel */
+        /* Ending Jlabel - text after good or bad ending */
         goodEnding = new JLabel("Chicken is now happy :D");
         goodEnding.setBounds(88,0, 400, 148);
         goodEnding.setForeground(new Color(0xEFFF7F)); // sets color of text
@@ -155,7 +159,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         badEnding.setFont(new Font("Mali", Font.BOLD, 20)); 
         badEnding.setVisible(false); 
         
-        // adds the ending and objective labels to JFrame
+        // adds the endings and objective labels to JFrame
         this.add(badEnding);
         this.add(goodEnding);
         this.add(objective); // adds the objective label w/ text + image we made earlier
@@ -227,10 +231,17 @@ public class ChickenGui extends JFrame implements ActionListener {
         
         // chicken eating
         if (e.getSource() == foodButton) {
-            foodLabel.setVisible(true);
-            goodEnding.setVisible(true);
             objective.setText(null);
             objective.setIcon(null);
+            
+            new FoodWindow(this);
+            this.setVisible(false);
+
+            System.out.println("hi");
+
+            foodLabel.setVisible(true);
+            goodEnding.setVisible(true);
+            
             this.setTitle("Happy Chicken");
         }
 

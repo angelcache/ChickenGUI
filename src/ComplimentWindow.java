@@ -12,7 +12,7 @@ public class ComplimentWindow {
 
     int answer;
     
-    ComplimentWindow(){
+    public ComplimentWindow(){
         // create icon and text for the Option Dialog
         ImageIcon sadChick = new ImageIcon("sadchick.png");
         String[] complimentOptions = {"You looking kinda crusty >:)", "Are you a chick? Because you're impecabble :)", "I love to eat chicken nuggets <3"};
@@ -24,7 +24,7 @@ public class ComplimentWindow {
                                               complimentOptions, 
                                               0);
     }
-
+    
     public int Result() {
         switch (answer) {
             case 0:

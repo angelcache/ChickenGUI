@@ -1,11 +1,181 @@
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class TestFrame /*implements ChangeListener extends JFrame implements ActionListener*/ {
+public class TestFrame extends JFrame implements ActionListener /*implements ChangeListener */ {
+
+    // JColorChooser = a GUI mechanism that let's a user choose a cooler
+
+    JButton button;
+    JLabel label;
+
+    TestFrame() {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(500,500);
+        this.setLayout(new FlowLayout());
+
+        button = new JButton("Pick a color");
+        button.addActionListener(this);
+
+        label = new JLabel();
+        label.setBackground(Color.white);
+        label.setOpaque(true); // allows us to see background color
+        label.setText("Color me yellow :D");
+        label.setFont(new Font("Calibri", Font.PLAIN, 100));
+        
+        this.add(button);
+        this.add(label);
+        this.pack();
+        this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == button) {
+            JColorChooser colorChooser = new JColorChooser(); // creates instance of our new JColorAChooser
+
+            Color color = JColorChooser.showDialog(null, "Pick a color", Color.black); // stores color inside color
+
+            label.setForeground(color);
+            label.setBackground(color);
+        }
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------//
+    /* JFileChoose = a GUI mechanism that let's a user choose a file (helpful for opening or saving files) bro code has other 
+       videos for opening file that I can watch later. */
+    /* 
+    JButton button;
+
+    TestFrame() {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new FlowLayout());
+
+        button = new JButton("Select File");
+        button.addActionListener(this);
+
+        this.add(button);
+        this.pack();
+        this.setVisible(true);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser fileChooser = new JFileChooser(); // currently doesn't do anything
+
+        // fileChooser.setCurrentDirectory(new File("."));  "." connects it to our current folder, our project folder
+        // set directory where file chooser will start
+        fileChooser.setCurrentDirectory(new File("C:\\Users\\Rela\\Desktop"));  // default directory is now desktop
+
+        // System.out.println(fileChooser.showOpenDialog(null));
+        // clicking open returns 0, cancel returns 1
+
+        //int response = fileChooser.showOpenDialog(null); // select file to open
+        int response = fileChooser.showSaveDialog(null); // select file to save
+
+        if (response == JFileChooser.APPROVE_OPTION) {  // if someone clicks open it will get file path
+            File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+            //System.out.println(file); 
+        }
+
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+    }
+    */
+
+    //-----------------------------------------------------------------------------------------------------------------------//
+
+    /* JMenuBars = a menu bar which many menus and items that have a specific function can be added */
+    /* 
+    JMenuBar menuBar;
+    JMenu fileMenu;
+    JMenu editMenu;
+    JMenu helpMenu;
+    JMenuItem loadItem;
+    JMenuItem saveItem;
+    JMenuItem exitItem;
+    ImageIcon icon;
+
+    TestFrame() {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(500, 500);
+        this.setLayout(new FlowLayout());
+
+        menuBar = new JMenuBar();
+        this.setJMenuBar(menuBar); 
+        
+        // must add menus in menubar to make it visible
+        fileMenu = new JMenu("File");
+        editMenu = new JMenu("Edit");
+        helpMenu = new JMenu("Help");
+
+        loadItem = new JMenuItem("Load");
+        saveItem = new JMenuItem("Save");
+        exitItem = new JMenuItem("Exit");
+
+        // we add menus to menubar 
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        menuBar.add(helpMenu);
+
+        // add these items into the menu 
+        fileMenu.add(loadItem);
+        fileMenu.add(saveItem);
+        fileMenu.add(exitItem);
+
+        // we will add an action listener to make them do something
+        loadItem.addActionListener(this);
+        saveItem.addActionListener(this);
+        exitItem.addActionListener(this);
+
+        // can add a mnemonic for each menu and item
+        fileMenu.setMnemonic(KeyEvent.VK_F); // set the key mnemonic to Alt + f
+        editMenu.setMnemonic(KeyEvent.VK_D); // Alt + d for edit menu
+        helpMenu.setMnemonic(KeyEvent.VK_H); // Alt + h for help menu
+
+        loadItem.setMnemonic(KeyEvent.VK_L); // L / l for load
+        saveItem.setMnemonic(KeyEvent.VK_S); // S / s for save
+        exitItem.setMnemonic(KeyEvent.VK_E); // E / e for exit
+
+        // you can create images for the items
+        icon = new ImageIcon("chickicon.png");
+        loadItem.setIcon(icon);
+        saveItem.setIcon(icon);
+        exitItem.setIcon(icon);
+
+        this.setVisible(true);
+    }
+
+    @Override
+        public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == loadItem) {
+            System.out.println("*beep boop* you loaded a file");
+        }
+        if (e.getSource() == loadItem) {
+            System.out.println("*beep boop* you saved a file");
+        }
+        if (e.getSource() == exitItem) {
+            System.exit(0);
+        }
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+    }
+    */
+
+    //-----------------------------------------------------------------------------------------------------------------------//
+    
+    /* Below, learnt about JProgressBar, which is perfect as an hp bar in a video game. Anyways, JProgressBar is a bar
+     * that can increase or decrease, you can set the minimum and max amount it increases, and can use a while loop and
+     * one way of using it is using a try catch with thread.sleep to be able to move the progress bar with a counter variable. 
+     * Another way, is linking it to a task and once a task is completed it will increase. You can customize it like many other 
+     * J features we have tried, for instance, can add text, change font of text, color foreground and background and many more.
+     */
+
+     /* 
     JFrame frame = new JFrame();
-    JProgressBar bar = new JProgressBar(0, 100);
+    JProgressBar bar = new JProgressBar(0, 100); // can set minimum and maximum amount for progress bar
 
     TestFrame() { 
         bar.setValue(0);
@@ -42,6 +212,8 @@ public class TestFrame /*implements ChangeListener extends JFrame implements Act
         bar.setFont(new Font("Calibri", Font.BOLD, 25));
         
     }
+    */
+
     /* Sliders -- made a little temperature slider, which showed which tick you were on through the use of change listener
      * the change listner is very similar to action listener but instead of using buttons, it is used for sliders.
      * Sliders ould be great for making a little cooking game that needs you to set the temperature of an oven.

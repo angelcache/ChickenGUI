@@ -265,7 +265,14 @@ public class Main {
         //TestFrame slide = new TestFrame();
 
         /* Progress bar = Visual adi to let the user know that an operation is proceding*/
-        TestFrame progressBar = new TestFrame();
+        //TestFrame progressBar = new TestFrame();
+
+        /* JMenuBars = a menu bar which many menus and items that have a specific function can be added */
+        /* JFileChoose = a GUI mechanism that let's a user choose a file (helpful for opening or saving files) */
+        //TestFrame menuBar = new TestFrame();
+
+        // JColorChooser = a GUI mechanism that let's a user choose a cooler
+        TestFrame colorChooser = new TestFrame();
 
     }
 }
