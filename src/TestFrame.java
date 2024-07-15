@@ -6,7 +6,8 @@ import javax.swing.*; // the * esnsures you import everything that is event. so 
 
 public class TestFrame extends JFrame /*implements MouseListener /*implements KeyListener*/ /*implements ActionListener*/ /*implements ChangeListener */ {
     /* Creating 2D animations in Java using method paint(Graphics g) and Graphics2D*/
-    MyPanel panel;
+    
+    /* MyPanel panel;
 
     public TestFrame() {
         panel = new MyPanel();
@@ -35,7 +36,7 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
             background = new ImageIcon("BG.png").getImage();
 
             // instantiate our variables
-            banana = new ImageIcon("mango.png").getImage();
+            banana = new ImageIcon("sadchick.png").getImage();
             timer = new Timer(10, this); // perfomrs an action every 1000 milliseconds, 1 second, it will perform action performed method
             timer.start();
         }
@@ -66,9 +67,8 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
         }
 
     }
-
-
-
+    /*
+    
     /* Creating 2D graphics in java */
     /*
     MyPanel panel;
