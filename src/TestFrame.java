@@ -1,9 +1,240 @@
 
-import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*; // the * esnsures you import everything that is event. so you dont have to manually import each
 
 public class TestFrame extends JFrame /*implements MouseListener /*implements KeyListener*/ /*implements ActionListener*/ /*implements ChangeListener */ {
+    /* Creating 2D animations in Java using method paint(Graphics g) and Graphics2D*/
+    MyPanel panel;
+
+    public TestFrame() {
+        panel = new MyPanel();
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.add(panel); // we will be painting on the panel itself
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }
+
+    private class MyPanel extends JPanel implements ActionListener {
+        final int PANEL_WIDTH = 420;
+        final int PANEL_HEIGHT = 600;
+        Image banana;
+        Image background;
+        Timer timer;
+        int xVelocity = 4;
+        int yVelocity = 1;
+        int x = 0;
+        int y = 0;
+
+        MyPanel() {
+            this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+            this.setBackground(Color.pink);
+            background = new ImageIcon("BG.png").getImage();
+
+            // instantiate our variables
+            banana = new ImageIcon("mango.png").getImage();
+            timer = new Timer(10, this); // perfomrs an action every 1000 milliseconds, 1 second, it will perform action performed method
+            timer.start();
+        }
+
+        public void paint(Graphics g) {
+            super.paint(g); // paitn background
+            Graphics2D g2D = (Graphics2D) g;
+
+            g2D.drawImage(background, 0, 0, null);
+            g2D.drawImage(banana, x, y, null); // draw our enemy at top corner
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // lets set bounds
+            
+            if (x >= PANEL_WIDTH - banana.getWidth(null) || x < 0) {
+                xVelocity = xVelocity * -1; // will flip velocity so it will go back and forth forever
+            }
+            x = x + xVelocity; // must call paint method again when we update position of enemy for this to show
+            repaint(); // repaint will call paint for us to redraw our graphics
+            
+            if (y >= PANEL_WIDTH - banana.getWidth(null) || y < 0) {
+                yVelocity = yVelocity * -1;
+            }
+            y = y + yVelocity;
+            repaint();
+        }
+
+    }
+
+
+
+    /* Creating 2D graphics in java */
+    /*
+    MyPanel panel;
+    Image image;
+
+    TestFrame() {
+
+        panel = new MyPanel();
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.add(panel);
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }
+
+    private class MyPanel extends JPanel {
+        public MyPanel() {
+            image = new ImageIcon("complimented.gif").getImage(); // creates an image out of the imageIcon
+            this.setPreferredSize(new Dimension(500, 500)); 
+            // now this entire panel is fully visible to us and the line wont start at the logo area which it did before becaus it is part of the frame
+        }
+
+        @Override
+        public void paint(Graphics g) { // g is our graphics object, and paint method is automatically invoked when we invoke a component like JFrame
+        Graphics2D g2D = (Graphics2D) g; // graphics g2d has more options for us to draw comapred to g
+
+        g2D.setStroke(new BasicStroke(5)); // changes the pixel of the stroke
+
+        /* basic shapes */
+        /* 
+        g2D.drawLine(0, 0, 500, 500);  
+
+        //Rectangle
+        g2D.setPaint(Color.pink); // changes color
+        g2D.drawRect(0, 0, 100, 200);
+        g2D.fillRect(0, 0, 100, 200); // fills the rectangle with that color
+
+        // Ovals
+        g2D.setPaint(Color.orange);
+        g2D.drawOval(0, 0, 100, 200);
+        g2D.fillOval(0, 0, 100, 200);
+
+        // triangles
+        int[] xPoints = {150, 250, 350};
+        int[] yPoints = {300, 150, 300};
+
+        g2D.setPaint(Color.yellow);
+        g2D.fillPolygon(xPoints, yPoints, 3);
+
+        // lets draw a Pokeball for practice
+        g2D.setPaint(Color.red);
+        //g2D.drawArc(0, 0, 100, 100, 0, 180);
+        g2D.fillArc(0, 0, 100, 100, 0, 180);
+        g2D.setPaint(Color.white);
+        g2D.fillArc(0, 0, 100, 100, 180, 180);
+
+        g2D.setPaint(Color.magenta);
+        g2D.setFont(new Font("Calibri", Font.BOLD, 50));
+        g2D.drawString("U R A WINNER! :D", 50, 50); // setting it to 0, 0 makes it offscreen
+
+        g2D.drawImage(image, 0, 0, null); // can make this the bg image by making it first
+        // anything more recently created overlaps previous items created
+        }
+    } 
+    */
+
+    /* Key Binds = bind an Action to a KeyStroke, don't require you to click a component to give it focus
+    *             all Swing components use Key Bindings, increase felxibility compared to KeyListeners
+    *             can assign key strokes to individual Swing components more difficult to utilize and
+    *             and set up :( eg. you have player 1 and player 2, you can have player 1 have a
+    *             certain set of keys on keyboard and player 2 can have a different set
+    */
+
+    /*
+        JLabel label;
+        Action upAction;
+        Action downAction;
+        Action leftAction;
+        Action rightAction;
+
+    public TestFrame() {
+
+        this.setTitle("KeyBind Demo");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(420, 420);
+        this.setLayout(null);
+        this.setLocationRelativeTo(null);
+
+        label = new JLabel();
+        label.setBackground(Color.red);
+        label.setBounds(100, 100, 100, 100);
+        label.setOpaque(true);
+
+        // instantiate the actions
+        upAction = new UpAction();
+        downAction = new DownAction();
+        leftAction = new LeftAction();
+        rightAction = new RightAction();
+
+        // with swing componenents in Java, each component is able to have its own unique mapping of key events to actions
+
+        // This associates it with the up down keys
+        label.getInputMap().put(KeyStroke.getKeyStroke("UP"), "upAction");
+        label.getActionMap().put("upAction", upAction); // key is our actionmap key from above and action will be one of our classes
+
+        label.getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "downAction");
+        label.getActionMap().put("downAction", downAction);
+
+        label.getInputMap().put(KeyStroke.getKeyStroke("LEFT"), "leftAction");
+        label.getActionMap().put("leftAction", leftAction);
+
+        label.getInputMap().put(KeyStroke.getKeyStroke("RIGHT"), "rightAction");
+        label.getActionMap().put("rightAction", rightAction);
+        
+        // lets try it with a w s d
+        label.getInputMap().put(KeyStroke.getKeyStroke('w'), "upAction");
+        label.getActionMap().put("upAction", upAction); // key is our actionmap key from above and action will be one of our classes
+
+        label.getInputMap().put(KeyStroke.getKeyStroke('s'), "downAction");
+        label.getActionMap().put("downAction", downAction);
+
+        label.getInputMap().put(KeyStroke.getKeyStroke('a'), "leftAction");
+        label.getActionMap().put("leftAction", leftAction);
+
+        label.getInputMap().put(KeyStroke.getKeyStroke('d'), "rightAction");
+        label.getActionMap().put("rightAction", rightAction);
+
+        this.add(label);
+        this.setVisible(true);
+    }
+
+        public class UpAction extends AbstractAction {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // set new location for our label
+                label.setLocation(label.getX(), label.getY() - 10);
+            }
+        }
+    
+        public class DownAction extends AbstractAction {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                label.setLocation(label.getX(), label.getY() + 10);
+            }
+        }
+
+        public class RightAction extends AbstractAction {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                label.setLocation(label.getX() + 10, label.getY());
+            }
+        }
+        public class LeftAction extends AbstractAction {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                label.setLocation(label.getX() - 10, label.getY());
+            }
+        }
+    */
 
     /* Drag and Drop = allows you to move around an image in the frame */
+
+    /*
     DragPanel dragPanel = new DragPanel();
 
     TestFrame() {
@@ -15,11 +246,60 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
         this.setVisible(true);
     }
 
+    import java.awt.Graphics;
+    import java.awt.Point;
+    import java.awt.event.MouseAdapter;
+    import java.awt.event.MouseEvent;
+    import java.awt.event.MouseMotionAdapter;
+    import javax.swing.ImageIcon;
+    import javax.swing.JPanel;
+    
+    public class DragPanel extends JPanel {
+        private ImageIcon image = new ImageIcon("wavingFriend.gif");
+        final int WIDTH = image.getIconWidth(); // final because width will not change
+        final int HEIGHT = image.getIconHeight();
+        Point imageCorner;
+        Point prevPoint;
+    
+        public DragPanel() {
+            imageCorner = new Point(0, 0); // at the very top corner of the image
+            ClickListener clickListener = new ClickListener();
+            DragListener dragListener = new DragListener();
+            this.addMouseListener(clickListener);
+            this.addMouseMotionListener(dragListener);
+        }
+    
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            image.paintIcon(this, g, (int) imageCorner.getX(), (int) imageCorner.getY());
+        }
+    
+        private class ClickListener extends MouseAdapter{
+            // waits until we click the mouse
+            public void mousePressed(MouseEvent e) {
+                prevPoint = e.getPoint(); // it is updating the rpevious point to where we clicked
+            }
+            
+        }
+    
+        private class DragListener extends MouseMotionAdapter {
+            // going to move our image as we move mouse around
+            public void mouseDragged(MouseEvent e) {
+                Point currentPoint = e.getPoint();
+                imageCorner.translate(
+                                    (int) (currentPoint.getX() - prevPoint.getX()), 
+                                    (int) (currentPoint.getY() - prevPoint.getY()) 
+                );
+                prevPoint = currentPoint;
+                repaint();
+            }
+        }
+    }
+    */
+
     /* MouseListener = allows you to move components when mous button is invoked
      * mouseClicked = Invoked when mouse button has been clicked (pressed and released) on component
-     * mousePressed = Invoked when mouse button has been pressed (hold down mouse button) on component
-     * mouseReleased = Invoked when mouse button has been released on component
-     * mouseEntered = Invoked when mouse enters a component, so area
+     * mousePressed = Invoked when mouse ked when mouse enters a component, so area
      * mouseExited = Invoked when mouse exits area of component
     */
 
@@ -675,5 +955,4 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
     */
 
     //--------------------------------------------------------------------------------------------------------------------//
-    
-}  
+}

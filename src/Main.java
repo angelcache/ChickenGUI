@@ -277,7 +277,15 @@ public class Main {
         // MouseListener = allows you to move components when mous button is invoked
         //TestFrame mouseListener = new TestFrame();
 
-        TestFrame dragAndDrop = new TestFrame();
+        //TestFrame dragAndDrop = new TestFrame();
+
+        /* Key Binds = bind an Action to a KeyStroke, don't require you to click a component to give it focus
+         *             all Swing components use Key Bindings, increase felxibility compared to KeyListeners
+         *             can assign key strokes to individual Swing components more difficult to utilize and
+         *             and set up :(
+         */
+
+         TestFrame game = new TestFrame();
 
     }
 }
