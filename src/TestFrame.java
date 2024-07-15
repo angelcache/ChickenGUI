@@ -1,17 +1,182 @@
 
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class TestFrame extends JFrame implements ActionListener /*implements ChangeListener */ {
+public class TestFrame extends JFrame /*implements MouseListener /*implements KeyListener*/ /*implements ActionListener*/ /*implements ChangeListener */ {
 
-    // JColorChooser = a GUI mechanism that let's a user choose a cooler
+    /* Drag and Drop = allows you to move around an image in the frame */
+    DragPanel dragPanel = new DragPanel();
 
-    JButton button;
+    TestFrame() {
+        this.add(dragPanel);
+        this.setTitle("Drag and Drop demo");
+        this.setSize(600, 600);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }
+
+    /* MouseListener = allows you to move components when mous button is invoked
+     * mouseClicked = Invoked when mouse button has been clicked (pressed and released) on component
+     * mousePressed = Invoked when mouse button has been pressed (hold down mouse button) on component
+     * mouseReleased = Invoked when mouse button has been released on component
+     * mouseEntered = Invoked when mouse enters a component, so area
+     * mouseExited = Invoked when mouse exits area of component
+    */
+
+    /*
     JLabel label;
+    ImageIcon sadIcon;
+    ImageIcon friendIcon;
+    ImageIcon happyIcon;
+    ImageIcon happyEndingIcon;
+    
+    TestFrame () {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(500, 500);
+        this.setLayout(null);
+        
+        label = new JLabel();
+        label.addMouseListener(this);
+        label.setBounds(140, 0, 500, 440);
+
+        sadIcon = new ImageIcon("sadchick.png");
+        friendIcon = new ImageIcon("friendFood.gif");
+        happyIcon = new ImageIcon("complimented.gif");
+        happyEndingIcon = new ImageIcon("friend.gif");
+
+        label.setIcon(sadIcon);
+
+        //label = new JLabel();
+        //label.setBounds(0, 0, 100, 100);
+        //label.setBackground(Color.red);
+        //label.setOpaque(true);
+        //label.addMouseListener(this);
+        //this.addMouseListener(this); // if we used this instead of label the mouse will respond to our entire frame
+
+        this.add(label);
+        this.setLocationRelativeTo(null); // have frame appear in middle of you computer screen
+        this.setVisible(true);
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // Invoked when mouse button has been clicked (pressed and released) on component
+        //System.out.println("You clicked the mouse");
+        //throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'"); make sure to get rid of this throw
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // Invoked when mouse button has been pressed (hold down mouse button) on component
+        //System.out.println("You pressed the mouse");
+        label.setIcon(happyIcon);
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // Invoked when mouse button has been released on component
+        //System.out.println("You released the mouse");
+        label.setIcon(happyEndingIcon);
+        int seconds = 5;
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // Invoked when mouse enters a component, so area
+        //System.out.println("You entered the component");
+        label.setBounds(64, 0, 500, 440);
+        label.setIcon(friendIcon);
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // Invoked when mouse exits area of component
+        //System.out.println("You exited the component");
+        label.setBounds(140, 0, 500, 440);
+        label.setIcon(sadIcon);
+    }
+
+    */
+
+
+    /* KeyListener = a way to move a label throught the use of your keyboard buttons, there are three parts to it
+     * 1) KeyTyped: is invoke when a keychar is typed, gives a char output
+     * 2) KeyPressed: also invoke when typed, but uses int ouput (so the chars number counterpart)
+     * 3) KeyReleased: called whenever key button of keyboard is released
+    */
+    
+    /* 
+    JLabel label;
+    ImageIcon icon;
+
+    TestFrame() {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(500, 500);
+        this.setLayout(null);
+        this.addKeyListener(this); // add the key listener to the frame
+        this.setVisible(true);
+
+        icon = new ImageIcon("friendFood.gif");
+
+        label = new JLabel();
+        label.setBounds(0, 0, 1000, 1000);
+        label.setIcon(icon);
+        // label.setBackground(Color.yellow); // were gonna move this label through the frame
+        // label.setOpaque(true);
+
+        this.getContentPane().setBackground(new Color(0xCCE8B8));
+        this.add(label);
+    }
+ 
+    public void keyTyped(KeyEvent e) {
+        // keyTyped = invoked when a key is typed. Uses KeyChar, char output
+        switch(e.getKeyChar()) {
+            case 'a': label.setLocation(label.getX() - 10, label.getY()); // if someone types in character a move label to left
+                break;
+            case 'w': label.setLocation(label.getX(), label.getY() - 10); // minus y to make it go up
+                break;
+            case 's': label.setLocation(label.getX(), label.getY() + 10); // adding to y makes it go down
+                break;
+            case 'd': label.setLocation(label.getX() + 10, label.getY());
+                break;
+        }
+        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+    }
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // keyPressed = Invoked when a physical key is pressed down. Uses KeyCode, int output'
+        // makes it so the arrow keys will make us move
+        switch(e.getKeyCode()) {
+            case 37: label.setLocation(label.getX() - 10, label.getY()); // if someone types in character a move label to left
+                break;
+            case 38: label.setLocation(label.getX(), label.getY() - 10); // minus y to make it go up
+                break;
+            case 39: label.setLocation(label.getX() + 10, label.getY()); // adding to y makes it go down
+                break;
+            case 40: label.setLocation(label.getX() , label.getY() + 10);
+                break;
+        }
+        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // keyReleased = called whenever a key button from keyboard is released 
+        System.out.println("You realeased key char: " + e.getKeyChar());
+        System.out.println("You realeased key code: " + e.getKeyCode()); // each key button has a number
+        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
+    }
+
+    */
+
+    //-----------------------------------------------------------------------------------------------------------------------//
+
+    /*  JColorChooser = a GUI mechanism that let's a user choose a cooler */
+
+    /* 
+    JButton button;
+    JLabel label; 
 
     TestFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,13 +206,17 @@ public class TestFrame extends JFrame implements ActionListener /*implements Cha
             Color color = JColorChooser.showDialog(null, "Pick a color", Color.black); // stores color inside color
 
             label.setForeground(color);
-            label.setBackground(color);
+            // label.setBackground(color);
+
+            // can change color of all sorts of components
         }
         throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
+    */
 
     //-----------------------------------------------------------------------------------------------------------------------//
-    /* JFileChoose = a GUI mechanism that let's a user choose a file (helpful for opening or saving files) bro code has other 
+
+    /* JFileChooser = a GUI mechanism that let's a user choose a file (helpful for opening or saving files) bro code has other 
        videos for opening file that I can watch later. */
     /* 
     JButton button;

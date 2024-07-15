@@ -20,7 +20,7 @@ public class FoodWindow extends JFrame implements ActionListener{
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public FoodWindow (ChickenGui frame) {
         mainFrame = frame;
-        String[] pantry = {"ham", "lemons", "pear", "egg", "banana", "mango", "seeds"};
+        String[] pantry = {"egg", "squash", "banana", "mango", "seeds"};
         foodOptions = new JComboBox(pantry);
         foodOptions.addActionListener(this);
         foodOptions.setBounds(140, 70, 77, 20);
@@ -39,12 +39,13 @@ public class FoodWindow extends JFrame implements ActionListener{
         this.add(foodButton);
         foodButton.addActionListener(this);
 
+        this.setLocationRelativeTo(null); 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setTitle("The Kitchen");
         this.setSize(400, 200);
         this.setResizable(false);
-        this.setVisible(true);
+
         ImageIcon image = new ImageIcon("chickicon.png");
         this.setIconImage(image.getImage()); // change icon of frame
         this.getContentPane().setBackground(new Color(0xCCE8B8));

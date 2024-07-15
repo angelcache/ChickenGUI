@@ -272,7 +272,12 @@ public class Main {
         //TestFrame menuBar = new TestFrame();
 
         // JColorChooser = a GUI mechanism that let's a user choose a cooler
-        TestFrame colorChooser = new TestFrame();
+        // TestFrame colorChooser = new TestFrame();
+
+        // MouseListener = allows you to move components when mous button is invoked
+        //TestFrame mouseListener = new TestFrame();
+
+        TestFrame dragAndDrop = new TestFrame();
 
     }
 }

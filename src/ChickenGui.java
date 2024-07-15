@@ -169,6 +169,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         this.setTitle("Sad Chicken");
         this.setSize(420,500);
         this.setResizable(false);
+        this.setLocationRelativeTo(null); // sets location of frame to the middle of your computer screen
         this.setVisible(true);
 
         ImageIcon image = new ImageIcon("chickicon.png");
@@ -188,9 +189,13 @@ public class ChickenGui extends JFrame implements ActionListener {
         foodButton.setVisible(false);
 
         if(e.getSource() == friendButton) {
-            friendLabel.setVisible(true); // after hitting button, friend image pops up
             objective.setText(null);
             objective.setIcon(null);
+            HugWindow hugWindow = new HugWindow(this);
+            hugWindow.setVisible(true);
+            this.setVisible(false);
+
+            friendLabel.setVisible(true); // after hitting button, friend image pops up
             goodEnding.setVisible(true);
             this.setTitle("Happy Chicken");
         }
@@ -234,7 +239,8 @@ public class ChickenGui extends JFrame implements ActionListener {
             objective.setText(null);
             objective.setIcon(null);
             
-            new FoodWindow(this);
+            FoodWindow foodWindow = new FoodWindow(this);
+            foodWindow.setVisible(true);
             this.setVisible(false);
 
             System.out.println("hi");
