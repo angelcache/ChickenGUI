@@ -1,8 +1,5 @@
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.*; // the * esnsures you import everything that is event. so you dont have to manually import each
+import javax.swing.*;
 
 public class TestFrame extends JFrame /*implements MouseListener /*implements KeyListener*/ /*implements ActionListener*/ /*implements ChangeListener */ {
     /* Creating 2D animations in Java using method paint(Graphics g) and Graphics2D*/
@@ -42,7 +39,7 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
         }
 
         public void paint(Graphics g) {
-            super.paint(g); // paitn background
+            super.paint(g); // paint background
             Graphics2D g2D = (Graphics2D) g;
 
             g2D.drawImage(background, 0, 0, null);

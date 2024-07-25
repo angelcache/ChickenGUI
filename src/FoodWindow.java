@@ -59,7 +59,8 @@ public class FoodWindow extends JFrame implements ActionListener{
         if (e.getSource() == foodButton) {
                 if (foodOptions.getSelectedItem().equals("banana")) {
                     this.setVisible(false);
-                    mainFrame.setVisible(true);
+                    FoodCatchWindow foodGame = new FoodCatchWindow(mainFrame);
+                    foodGame.setVisible(true);
                 } else if (foodOptions.getSelectedItem().equals("mango")) {
                     objective.setText("Tha- that is yellow, curvy, and sweet but not it. Try again.");
                 } else if(foodOptions.getSelectedItem().equals("egg")) {

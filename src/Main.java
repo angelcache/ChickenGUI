@@ -1,9 +1,12 @@
 //import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.IOException;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         /* Basics of making a GUI
             
             import java.awt.Color; // this import is needed to change a frames color

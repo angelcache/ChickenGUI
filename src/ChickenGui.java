@@ -2,6 +2,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.*;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,8 +14,8 @@ import javax.swing.border.Border;
 
 public class ChickenGui extends JFrame implements ActionListener { 
     /* This class is my attempt at learning and implementing what I learnt by making a little 
-    *  chicken GUI. In this GUI, you are given a tasks to make a sad and overworked chick happy and are
-    *  given some options to do so. The chicken gifs I used were from tenor.
+    *  chicken GUI. In this GUI, you are given a tasks to make a sad and overworked chick happy and are given 
+    *  some options to do so. The chicken gifs I used were from tenor. The music is made by 茶葉のぎか on youtube.
     */
 
     // extends makes MyFrame a sublass of parent class Jframe
@@ -34,7 +37,28 @@ public class ChickenGui extends JFrame implements ActionListener {
     JLabel goodEnding;
     JLabel badEnding;
 
-    public ChickenGui() { 
+    // for the sad music
+    File sadAudioFile;
+    AudioInputStream sadAudio;
+    Clip sadClip;
+
+    // for the happy music
+    File happyAudioFile;
+    AudioInputStream happyAudio;
+    Clip happyClip;
+
+    public ChickenGui() throws UnsupportedAudioFileException, IOException, LineUnavailableException { 
+        /* music customization */
+        sadAudioFile = new File("soundForSadChicken.wav");
+        sadAudio = AudioSystem.getAudioInputStream(sadAudioFile);
+        sadClip = AudioSystem.getClip();
+        sadClip.open(sadAudio);
+        sadClip.start();
+
+        happyAudioFile = new File("soundForHappyChicken.wav");
+        happyAudio = AudioSystem.getAudioInputStream(happyAudioFile);
+        happyClip = AudioSystem.getClip();
+        happyClip.open(happyAudio);
 
         /* creating a hanging out with friend button */
         // ImageIcon buttonIcon = new ImageIcon("chickicon"); // can add image to buttons
@@ -115,7 +139,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         resetButton =  new JButton();
         resetButton.setBounds(150, 350, 100, 50);
         resetButton.setText("Reset");
-        complimentButton.setFont(new Font("Mali", Font.BOLD, 12));
+        resetButton.setFont(new Font("Mali", Font.BOLD, 12));
         resetButton.setFocusable(false);
         resetButton.setForeground(Color.white);
         resetButton.setBackground(new Color(0xD3C163));
@@ -189,6 +213,9 @@ public class ChickenGui extends JFrame implements ActionListener {
         foodButton.setVisible(false);
 
         if(e.getSource() == friendButton) {
+            sadClip.stop();
+            happyClip.start();
+
             objective.setText(null);
             objective.setIcon(null);
             HugWindow hugWindow = new HugWindow(this);
@@ -201,11 +228,22 @@ public class ChickenGui extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == complimentButton) {
+            sadClip.stop();
+            happyClip.start();
+
             friendButton.setEnabled(false); // disables button
             foodButton.setEnabled(false);
             this.dispose();
-            ComplimentWindow window = new ComplimentWindow();
-            int result = window.Result();
+
+            LibraryGame libraryGame = new LibraryGame(this);
+            libraryGame.setVisible(true);
+
+            /*
+            int result = 0;
+            if (libraryGameResult == 1) {
+                ComplimentWindow window = new ComplimentWindow();
+                result = window.Result();
+            }
 
             // complimented chicken
             if (result == 1) { 
@@ -231,19 +269,21 @@ public class ChickenGui extends JFrame implements ActionListener {
                 objective.setText(null);
                 objective.setIcon(null);
                 this.setVisible(true);
-            }      
+            }
+            */      
         }
         
         // chicken eating
         if (e.getSource() == foodButton) {
+            sadClip.stop();
+            happyClip.start();
+
             objective.setText(null);
             objective.setIcon(null);
             
             FoodWindow foodWindow = new FoodWindow(this);
             foodWindow.setVisible(true);
             this.setVisible(false);
-
-            System.out.println("hi");
 
             foodLabel.setVisible(true);
             goodEnding.setVisible(true);
@@ -252,6 +292,9 @@ public class ChickenGui extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == resetButton) {
+            happyClip.stop();
+            sadClip.start();
+
             // gets rid of any of the endings you got
             this.setTitle("Sad Chicken");
             friendLabel.setVisible(false);
