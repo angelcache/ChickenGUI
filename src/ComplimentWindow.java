@@ -19,7 +19,7 @@ public class ComplimentWindow {
     private int answer;
     
     public ComplimentWindow(){
-        
+
         // creating panel to color JOptionPane
         JPanel panel = new JPanel();
         panel.setBackground(new Color(0xD3C163));

@@ -25,6 +25,7 @@ public class ChickenGui extends JFrame implements ActionListener {
     JLabel friendLabel; // label that makes friend pop up after clicking button to hang out
 
     JButton complimentButton;
+    boolean complimenting = false;
     JLabel complimentSuccessLabel;
     JLabel complimentFailLabel;
 
@@ -234,43 +235,19 @@ public class ChickenGui extends JFrame implements ActionListener {
             friendButton.setEnabled(false); // disables button
             foodButton.setEnabled(false);
             this.dispose();
-
+            int complimentResult = -1;
             LibraryGame libraryGame = new LibraryGame(this);
-            libraryGame.setVisible(true);
+            libraryGame.setVisible(false);
 
-            /*
-            int result = 0;
-            if (libraryGameResult == 1) {
-                ComplimentWindow window = new ComplimentWindow();
-                result = window.Result();
+            if (!complimenting) {
+                // Library Game
+                libraryGame.setVisible(true);
             }
 
-            // complimented chicken
-            if (result == 1) { 
-                friendButton.setEnabled(false);
-                badEnding.setVisible(false);
-                complimentFailLabel.setVisible(false);
-                complimentSuccessLabel.setVisible(true);
-                objective.setText(null);
-                objective.setIcon(null);
-                goodEnding.setVisible(true);
-                this.setVisible(true);
-                this.setTitle("Happy Chicken");
-                complimentButton.setEnabled(false); // got to be at end, doesn't work at front
+            if (complimenting) {
+                libraryGame.gameOver();
             }
-
-            // insulted chicken
-            if (result == 0 ||  result == 2) { 
-                friendButton.setVisible(true);
-                complimentButton.setVisible(true);
-                foodButton.setVisible(true);
-                badEnding.setVisible(true);
-                complimentFailLabel.setVisible(true);
-                objective.setText(null);
-                objective.setIcon(null);
-                this.setVisible(true);
-            }
-            */      
+            
         }
         
         // chicken eating
@@ -306,6 +283,7 @@ public class ChickenGui extends JFrame implements ActionListener {
             // shows the options / buttons again
             friendButton.setVisible(true);
             complimentButton.setVisible(true);
+            complimenting = false; // reset the maze game
             foodButton.setVisible(true);
             friendButton.setEnabled(true);
             complimentButton.setEnabled(true);
