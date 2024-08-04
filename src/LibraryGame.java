@@ -2,7 +2,7 @@
  * Purpose: Penguin goes to the library to learn more about how to compliment chicken. The game will be a maze
  *          through the library where penguin must collect 3 books that will help him learn how to be a good
  *          comforter when a friend is not in the best mood.
- * Images: penguin walking and book gifs were made by me on Piskel
+ * Images: penguin walking and book gifs were made by me on Piskel, bad ending image made on clip studio paint
  */
 
 /*-----------------------------------------------------------------------------------------------------------------*/
@@ -83,18 +83,44 @@ class LibraryGame extends JFrame {
         private int penguinX = 1;
         private int penguinY = 1;
 
+        // penguin
         private String penguinDirection = "front";
         private Image penguinFront = new ImageIcon("penguinFrontWalking.gif").getImage();
         private Image penguinBack = new ImageIcon("penguinBackWalking.gif").getImage();
         private Image penguinLeft = new ImageIcon("penguinLeftWalking.gif").getImage();
         private Image penguinRight = new ImageIcon("penguinRightWalking.gif").getImage();
 
-        private int book1X = 0; 
-        private int book1Y = 0;
-        private int book2X = 0; 
-        private int book2Y = 0;
-        private int book3X = 0; 
-        private int book3Y = 0;
+        // 3 librarian npc's / enemies
+
+        private int[] librarian1XY = {3, 5};
+        private int[] librarian2XY = {11, 3};
+        private int[] librarian3XY = {7, 11};
+
+        private Image librarian1Left = new ImageIcon("librarianLeftWalking.gif").getImage();
+        private Image librarian1Right = new ImageIcon("librarianRightWalking.gif").getImage();
+        private String librarian1Position = "right";
+        private int librarianXVelocity1 = 1;
+
+        private Image librarian2Left = new ImageIcon("librarianLeftWalking.gif").getImage();
+        private Image librarian2Right = new ImageIcon("librarianRightWalking.gif").getImage();
+        private String librarian2Position = "right";
+        private int librarianXVelocity2 = 1;
+
+        private Image librarian3Left = new ImageIcon("librarianLeftWalking.gif").getImage();
+        private Image librarian3Right = new ImageIcon("librarianRightWalking.gif").getImage();
+        private String librarian3Position = "left";
+        private int librarianXVelocity3 = 1;
+
+        // kicked out of library image
+        private Image badEnding = new ImageIcon("badEnding.png").getImage();
+
+        int turn1 = 0; // even is right, odd is left
+        int turn2 = 0;
+        int turn3 = 0;
+
+        private int[] book1XY = {0, 0};
+        private int[] book2XY = {0, 0};
+        private int[] book3XY = {0, 0};
         private Image book = new ImageIcon("book.gif").getImage();
         private Image book2 = new ImageIcon("book.gif").getImage();
         private Image book3 = new ImageIcon("book.gif").getImage();
@@ -102,10 +128,11 @@ class LibraryGame extends JFrame {
 
         private final int[][] maze = new int[MAZE_UNITS][MAZE_UNITS];
 
-        private static final int DELAY = 75;
+        private static final int DELAY = 220;
         private Timer timer;
         private int booksCollected = 0;
         private JButton successButton;
+        private JButton retryButton;
 
         /**
          * Library Panel constructor creates Panel, customizes it + starts the game by initializing the maze
@@ -125,10 +152,24 @@ class LibraryGame extends JFrame {
             successButton.setForeground(Color.white);
             successButton.setBackground(new Color(0xD3C163));
             successButton.setBorder(BorderFactory.createEtchedBorder());
-            
+
             this.add(successButton);
             successButton.setVisible(false);
             successButton.addActionListener(this);
+
+            retryButton = new JButton();
+            retryButton.setBounds(150, 350, 100, 50);
+            retryButton.setText("Retry");
+            retryButton.setFont(new Font("Mali", Font.BOLD, 12));
+            retryButton.setFocusable(false);
+            retryButton.setForeground(Color.white);
+            retryButton.setBackground(new Color(0xD3C163));
+            retryButton.setBorder(BorderFactory.createEtchedBorder());
+            
+            this.add(retryButton);
+            retryButton.setVisible(false);
+            retryButton.addActionListener(this);
+            
             startGame();
         }
 
@@ -148,21 +189,17 @@ class LibraryGame extends JFrame {
          * Initializes the books 
         */
         private void newBooks() {
-            // First book always bottom right
-            book1X = PANEL_MAZE - 2;
-            book1Y = PANEL_MAZE - 2;
+            // First book placed in the middle
+            book1XY[0] += PANEL_MAZE - 8;
+            book1XY[1] += PANEL_MAZE - 6;
 
             // Second book is place in bottom left, ensures its placed on path (0)
-           do { 
-                book2X += 1;
-                book2Y = PANEL_MAZE - 4;
-            } while (maze[book2Y][book2X] != 0);
-
+            book2XY[0] += 1;
+            book2XY[1] = PANEL_MAZE - 10;
+  
             // 3rd book top right: ensures its placed on path (0)
-            do { 
-                book3X = PANEL_MAZE - 2;
-                book3Y += 1;
-            } while (maze[book3Y][book3X] != 0);
+            book3XY[0] = PANEL_MAZE - 2;
+            book3XY[1] += 1;
         }
 
         /**
@@ -190,12 +227,20 @@ class LibraryGame extends JFrame {
                 int currentX = cell[0];
                 int currentY = cell[1];
 
-                // shuffle directions to ensure randomness of path - ensures DFS explores creates diff pathways each restart
+                /*  shuffle directions to ensure randomness of path - ensures DFS explores creates diff pathways each restart
                 for (int i = 1; i < directions.length; i++) {
                     int[] temp = directions[i];
                     int randIndex = random.nextInt(directions.length);
                     directions[i] = directions[randIndex];
                     directions[randIndex] = temp;
+                }
+                */
+
+                // shuffles a directions once to create a more dynamic looking maze
+                for (int i = 1; i < directions.length; i++) {
+                    int[] temp = directions[i];
+                    directions[i] = directions[i - 1];
+                    directions[i - 1] = temp;
                 }
 
                 for (int[]dir: directions) {
@@ -212,24 +257,62 @@ class LibraryGame extends JFrame {
 
         }
 
+        /**
+         * Checks to see if penguin has collided with a book or a librarian
+         */
         public void checkCollisions() {
-            if (penguinX == book1X && penguinY == book1Y) {
-                booksCollected += 1;
-                book1X = -1;
-            }
-            if (penguinX == book2X && penguinY == book2Y) {
-                booksCollected += 1;
-                book2X = -1;
-            }
-            if (penguinX == book3X && penguinY == book3Y) {
-                booksCollected += 1;
-                book3X = -1;
-            }
 
-            if (booksCollected >= 3) {
+            // Define penguin's bounding box
+            Rectangle penguinBounds = new Rectangle(penguinX, penguinY, 40, 40);
+
+            // check if penguin has collided with a book
+            checkBookCollision(penguinBounds, book1XY);
+            checkBookCollision(penguinBounds, book2XY);
+            checkBookCollision(penguinBounds, book3XY);
+
+            if(booksCollected >= 3) {
                 success = true;
             }
+
+            // check if penguin has collided with a librarian
+            checkLibrarianCollision(penguinBounds, librarian1XY);
+            checkLibrarianCollision(penguinBounds, librarian2XY);
+            checkLibrarianCollision(penguinBounds, librarian3XY);
+        
         }
+
+        /**
+         * Checks if penguin collided with a book
+         */
+        private void checkBookCollision(Rectangle penguinBounds, int[] books) {
+            if (penguinX == book1XY[0] && penguinY == book1XY[1]) {
+                booksCollected += 1;
+                book1XY[0]= -1;
+            }
+            if (penguinX == book2XY[0] && penguinY == book2XY[1]) {
+                booksCollected += 1;
+                book2XY[0] = -1;
+            }
+            if (penguinX == book3XY[0] && penguinY == book3XY[1]) {
+                booksCollected += 1;
+                book3XY[0] = -1;
+            }
+
+        }
+
+        /**
+         * Checks if penguin collided with a librarian
+         */
+        private void checkLibrarianCollision(Rectangle penguinBounds, int[] librarian) {
+            if (penguinX == librarian1XY[0] && penguinY == librarian1XY[1]) {
+                running = false; success = false;
+            } else if (penguinX == librarian2XY[0] && penguinY == librarian2XY[1]) {
+                running = false; success = false;
+            } else if (penguinX == librarian3XY[0] && penguinY == librarian3XY[1]) {
+                running = false; success = false;
+            } 
+        }
+
     
         /**
          * Creates the drawing component and calls all the other drawing methods 
@@ -238,6 +321,12 @@ class LibraryGame extends JFrame {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             if (!running && !success) {
+                g.drawImage(badEnding, 100,160, this);
+                g.setColor(Color.black);
+                g.setFont(new Font("Calibri", Font.BOLD, 30));
+                FontMetrics metrics = getFontMetrics(g.getFont()); 
+                g.drawString("Librarian kicked you out \n for running!", ((SCREEN_WIDTH) - metrics.stringWidth("Librarian kicked you out \n for running!")) / 2, 120);
+                retryButton.setVisible(true);
 
             } else if (success) {
                 g.setColor(new Color(0xCCE8B8));
@@ -245,9 +334,12 @@ class LibraryGame extends JFrame {
                 FontMetrics metrics = getFontMetrics(g.getFont()); 
                 g.drawString("Success! Go compliment chicken :)", ((SCREEN_WIDTH) - metrics.stringWidth("Success! Go compliment chicken :)")) / 2, 240);
                 successButton.setVisible(true);
+
             } else {
+                retryButton.setVisible(false); 
                 drawMaze(g);
                 drawPenguin(g);
+                drawLibrarians(g);
                 drawBooks(g);
             }
             
@@ -292,14 +384,47 @@ class LibraryGame extends JFrame {
                     break;
             }
         }
+        
+        /**
+         * Drawing Librarians, placing them in the correct coordinates
+         * @param g
+         */
+        private void drawLibrarians(Graphics g) {
+            switch (librarian1Position) {
+                case "right":
+                    g.drawImage(librarian1Right, librarian1XY[0] * MAZE_UNITS, librarian1XY[1] * MAZE_UNITS, this);
+                    break;
+                case "left":
+                    g.drawImage(librarian1Left, librarian1XY[0] * MAZE_UNITS, librarian1XY[1] * MAZE_UNITS, this);
+                    break;
+            }
+
+            switch (librarian2Position) {
+                case "right":
+                    g.drawImage(librarian2Right, librarian2XY[0] * MAZE_UNITS, librarian2XY[1] * MAZE_UNITS, this);
+                    break;
+                case "left":
+                    g.drawImage(librarian2Left, librarian2XY[0] * MAZE_UNITS, librarian2XY[1] * MAZE_UNITS, this);
+                    break;
+            }
+
+            switch (librarian3Position) {
+                case "right":
+                    g.drawImage(librarian3Right, librarian3XY[0] * MAZE_UNITS, librarian3XY[1] * MAZE_UNITS, this);
+                    break;
+                case "left":
+                    g.drawImage(librarian3Left, librarian3XY[0] * MAZE_UNITS, librarian3XY[1] * MAZE_UNITS, this);
+                    break;
+            }
+        }
 
         /**
          * Draws the 3 Books and places in the maze
          */
         private void drawBooks(Graphics g) {
-            g.drawImage(book, book1X * MAZE_UNITS, book1Y * MAZE_UNITS, this);
-            g.drawImage(book2, book2X * MAZE_UNITS, book2Y * MAZE_UNITS, this);
-            g.drawImage(book3, book3X * MAZE_UNITS, book3Y * MAZE_UNITS, this);
+            g.drawImage(book, book1XY[0] * MAZE_UNITS, book1XY[1] * MAZE_UNITS, this);
+            g.drawImage(book2, book2XY[0] * MAZE_UNITS, book2XY[1] * MAZE_UNITS, this);
+            g.drawImage(book3, book3XY[0] * MAZE_UNITS, book3XY[1] * MAZE_UNITS, this);
         }
 
         /**
@@ -328,6 +453,68 @@ class LibraryGame extends JFrame {
                 thisFrame.setVisible(false);
                 gameOver();
             }
+
+            if (e.getSource() == retryButton) {
+                penguinX = 1; penguinY = 1;
+                book1XY[1] += PANEL_MAZE - 6; book2XY[1] = PANEL_MAZE - 10; book3XY[0] = -1;
+                booksCollected = 0;
+                running = true;
+            }
+
+            // Librarian movements
+
+            // Librarian 1
+            int newX = librarian1XY[0] + librarianXVelocity1;
+
+            if (newX >= 0 && librarian1XY[1] >= 0 && librarian1XY[1] < PANEL_MAZE && librarian1XY[1] < PANEL_MAZE && maze[librarian1XY[1]][newX] == 0) {
+                librarian1XY[0] = newX;
+            } else {
+                turn1++;
+                librarianXVelocity1 = librarianXVelocity1 * -1;
+                librarian1XY[0] += librarianXVelocity1;
+            }
+
+            if (turn1 % 2 == 1) {
+                librarian1Position = "left";
+            } else {
+                librarian1Position = "right";
+            }
+
+            // Librarian 2
+            newX = librarian2XY[0] + librarianXVelocity2;
+
+            if (newX >= 0 && librarian2XY[1] >= 0 && librarian2XY[1] < PANEL_MAZE && librarian2XY[1] < PANEL_MAZE && maze[librarian2XY[1]][newX] == 0) {
+                librarian2XY[0] = newX;
+            } else {
+                turn2++;
+                librarianXVelocity2 = librarianXVelocity2 * -1;
+                librarian2XY[0] += librarianXVelocity2;
+            }
+            
+            if (turn2 % 2 == 1) {
+                librarian2Position = "left";
+            } else {
+                librarian2Position = "right";
+            }
+
+            // Librarian 3
+            newX = librarian3XY[0] + librarianXVelocity3;
+ 
+            if (newX >= 0 && librarian3XY[1] >= 0 && librarian3XY[1] < PANEL_MAZE && librarian3XY[1] < PANEL_MAZE && maze[librarian3XY[1]][newX] == 0) {
+                librarian3XY[0] = newX;
+            } else {
+                turn3++;
+                librarianXVelocity3 = librarianXVelocity3 * -1;
+                librarian3XY[0] += librarianXVelocity3;
+            }
+            
+            if (turn3 % 2 == 1) {
+                librarian3Position = "left";
+            } else {
+                librarian3Position = "right";
+            }
+
+            repaint();
         }
 
         /*-----------------------------------------------------------------------------------------------------------------*/
@@ -341,15 +528,19 @@ class LibraryGame extends JFrame {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
                         movePenguin(-1, 0);
+                        penguinDirection = "left";
                         break;
                     case KeyEvent.VK_RIGHT:
                         movePenguin(1, 0);
+                        penguinDirection = "right";
                         break;
                     case KeyEvent.VK_UP:
                         movePenguin(0, -1);
+                        penguinDirection = "back";
                         break;
                     case KeyEvent.VK_DOWN:
                         movePenguin(0,1);
+                        penguinDirection = "front";
                         break;
                 }
             }
