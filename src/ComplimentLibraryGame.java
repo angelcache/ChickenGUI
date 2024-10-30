@@ -15,9 +15,9 @@ import javax.swing.*;
 
 /*-----------------------------------------------------------------------------------------------------------------*/
 
-class LibraryGame extends JFrame {
+class ComplimentLibraryGame extends JFrame {
     private ChickenGui mainFrame;
-    private LibraryGame thisFrame;
+    private ComplimentLibraryGame thisFrame;
     private final int SCREEN_WIDTH = 616;
     private final int SCREEN_HEIGHT = 640;
 
@@ -27,7 +27,7 @@ class LibraryGame extends JFrame {
     /**
      * Library Game constructor generates the frame and customizes it
      */
-    public LibraryGame(ChickenGui frame) {
+    public ComplimentLibraryGame(ChickenGui frame) {
         this.setTitle("Learn about complimenting");
         this.add(new LibraryPanel());
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -140,7 +140,6 @@ class LibraryGame extends JFrame {
         public LibraryPanel() {
             this.setBackground(new Color(0xD3C163));
             this.setPreferredSize(new Dimension(PANEL_MAZE * MAZE_UNITS, PANEL_MAZE * MAZE_UNITS));
-            this.setBackground(new Color(0xD3C163));
             this.setFocusable(true);
             this.addKeyListener(new TAdapter());
 
@@ -271,6 +270,7 @@ class LibraryGame extends JFrame {
             checkBookCollision(penguinBounds, book3XY);
 
             if(booksCollected >= 3) {
+                running = false;
                 success = true;
             }
 

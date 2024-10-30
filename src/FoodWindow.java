@@ -44,6 +44,7 @@ public class FoodWindow extends JFrame implements ActionListener{
         this.setLayout(null);
         this.setTitle("The Kitchen");
         this.setSize(400, 200);
+        this.setIconImage(new ImageIcon("chickicon.png").getImage());
         this.setResizable(false);
 
         ImageIcon image = new ImageIcon("chickicon.png");
@@ -59,7 +60,7 @@ public class FoodWindow extends JFrame implements ActionListener{
         if (e.getSource() == foodButton) {
                 if (foodOptions.getSelectedItem().equals("banana")) {
                     this.setVisible(false);
-                    FoodCatchWindow foodGame = new FoodCatchWindow(mainFrame);
+                    FoodCatchGame foodGame = new FoodCatchGame(mainFrame);
                     foodGame.setVisible(true);
                 } else if (foodOptions.getSelectedItem().equals("mango")) {
                     objective.setText("Tha- that is yellow, curvy, and sweet but not it. Try again.");

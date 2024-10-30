@@ -24,6 +24,7 @@ public class HugWindow extends JFrame implements MouseListener, ActionListener {
         // customizing the hug window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(420, 500);
+        this.setIconImage(new ImageIcon("chickicon.png").getImage());
         this.setLayout(null);
 
         

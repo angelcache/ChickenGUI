@@ -3,16 +3,17 @@ import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
 
-public class FoodCatchWindow extends JFrame{
+public class FoodCatchGame extends JFrame{
     ChickenGui mainFrame;
-    FoodCatchWindow foodFrame;
+    FoodCatchGame foodFrame;
 
-    public FoodCatchWindow(ChickenGui frame) {
+    public FoodCatchGame(ChickenGui frame) {
         this.add(new FoodPanel());
         this.setTitle("Catch the Banana");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
         this.pack();
+        this.setIconImage(new ImageIcon("chickicon.png").getImage());
         this.setLocationRelativeTo(null);
 
         mainFrame = frame;

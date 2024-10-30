@@ -219,8 +219,9 @@ public class ChickenGui extends JFrame implements ActionListener {
 
             objective.setText(null);
             objective.setIcon(null);
-            HugWindow hugWindow = new HugWindow(this);
-            hugWindow.setVisible(true);
+            
+            HugClothesGame clothesGame = new HugClothesGame(this);
+            clothesGame.setVisible(true);
             this.setVisible(false);
 
             friendLabel.setVisible(true); // after hitting button, friend image pops up
@@ -236,7 +237,7 @@ public class ChickenGui extends JFrame implements ActionListener {
             foodButton.setEnabled(false);
             this.dispose();
             int complimentResult = -1;
-            LibraryGame libraryGame = new LibraryGame(this);
+            ComplimentLibraryGame libraryGame = new ComplimentLibraryGame(this);
             libraryGame.setVisible(false);
 
             if (!complimenting) {
