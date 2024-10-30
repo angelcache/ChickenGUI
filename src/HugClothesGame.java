@@ -15,7 +15,7 @@ public class HugClothesGame extends JFrame {
         //this.add(new gamePanel());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
-        //this.setSize(567, 590); // 517
+        //--this.setSize(567, 590); // 517
         this.setLocationRelativeTo(null);
         this.setTitle("Fold the Clothes Neatly");
         this.setIconImage(new ImageIcon("chickicon.png").getImage());
@@ -23,25 +23,45 @@ public class HugClothesGame extends JFrame {
     }
 
     private class introPanel extends JPanel implements ActionListener {
-        private String[] strings = {"Hey chi- What is going on here?", 
-                            "This place looks like a dump..", 
-                            "Go take a bath I'll help you clean up!"};
-        private ImageIcon door = new ImageIcon("Door");                    
+        private String[] dialogue = {"Hey chicken want a hug-", 
+                                    "Geez, what happened here?! This place looks like a dump..", 
+                                    "Sorry, I'm too stinky and gross right now..",
+                                    "Go take a bath I'll help you clean up!"};
+        private ImageIcon door = new ImageIcon("door.png");
+        private ImageIcon chickensRoom = new ImageIcon("clothesGameIntro.png");
+        private JLabel cutscene = new JLabel();   
+        private JLabel dialogueLabel = new JLabel();                 
         private JButton transitionButton;
-
+    
         public introPanel() {
             this.setBackground(new Color(0xD3C163));
             this.setPreferredSize(new Dimension(550, 550));
             this.setFocusable(true);
-
+            this.setLayout(null); // Set layout to null for absolute positioning
+    
             transitionButton = new JButton("*knock* *knock*");
+            transitionButton.setBackground(new Color(0x9E6B1D));
+            transitionButton.addActionListener(this); 
+            transitionButton.setBounds(150, 450, 250, 50); 
             this.add(transitionButton);
+    
+            // Set the icon for the door label
+            cutscene.setIcon(door);
+            cutscene.setBounds(90, 0, 400, 424); 
+            this.add(cutscene); // Add the label to the panel
+            cutscene.setVisible(true); // Show the door label
         }
-
+    
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == transitionButton) {
-                
+                cutscene.setIcon(chickensRoom);
+                cutscene.setBounds(10, 10, 530, 530);
+                transitionButton.setVisible(false);
+                dialogueLabel.setText(dialogue[0]);
+                dialogueLabel.setBounds(90, 0, 400, 424); 
+                this.add(dialogueLabel);
+                dialogueLabel.setVisible(true);
             }
         }
     }

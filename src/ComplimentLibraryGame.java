@@ -272,6 +272,7 @@ class ComplimentLibraryGame extends JFrame {
             if(booksCollected >= 3) {
                 running = false;
                 success = true;
+                System.out.println("Success!");
             }
 
             // check if penguin has collided with a librarian
@@ -456,8 +457,6 @@ class ComplimentLibraryGame extends JFrame {
 
             if (e.getSource() == retryButton) {
                 penguinX = 1; penguinY = 1;
-                book1XY[1] += PANEL_MAZE - 6; book2XY[1] = PANEL_MAZE - 10; book3XY[0] = -1;
-                booksCollected = 0;
                 running = true;
             }
 
