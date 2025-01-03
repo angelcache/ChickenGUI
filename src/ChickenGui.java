@@ -94,7 +94,7 @@ public class ChickenGui extends JFrame implements ActionListener {
 
         // display a label on our frame after clicking friend button
         friendLabel = new JLabel();
-        ImageIcon friend = new ImageIcon("friend.gif");
+        ImageIcon friend = new ImageIcon("img/friend.gif");
         friendLabel.setIcon(friend);
         friendLabel.setBounds(14, 0, 400, 424);
         friendLabel.setVisible(false);
@@ -114,14 +114,14 @@ public class ChickenGui extends JFrame implements ActionListener {
 
         // Getting the image of good and bad endings of complimenting chicken game
         complimentSuccessLabel = new JLabel();
-        ImageIcon complimentedChick = new ImageIcon("complimented.gif");
+        ImageIcon complimentedChick = new ImageIcon("img/complimented.gif");
         complimentSuccessLabel.setIcon(complimentedChick);
         complimentSuccessLabel.setBounds(32, -10, 400, 400);
         complimentSuccessLabel.setVisible(false);
         this.add(complimentSuccessLabel);
 
         complimentFailLabel = new JLabel();
-        ImageIcon cryingChick = new ImageIcon("sad.gif");
+        ImageIcon cryingChick = new ImageIcon("img/sad.gif");
         complimentFailLabel.setIcon(cryingChick);
         complimentFailLabel.setBounds(50, 0, 400, 400);
         complimentFailLabel.setVisible(false);
@@ -141,7 +141,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         this.add(foodButton);
 
         foodLabel = new JLabel();
-        ImageIcon foodIcon = new ImageIcon("eating.gif");
+        ImageIcon foodIcon = new ImageIcon("img/eating.gif");
         foodLabel.setIcon(foodIcon);
         foodLabel.setBounds(80, -20, 500,500);
         foodLabel.setVisible(false);
@@ -176,7 +176,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         objective.setHorizontalAlignment(JLabel.CENTER); // set horizontal position of icon + text within label
         
         // add sad chicken image to Objective
-        ImageIcon chicken = new ImageIcon("sadchick.png"); // creates image
+        ImageIcon chicken = new ImageIcon("img/sadchick.png"); // creates image
         objective.setIcon(chicken); // adds it to JLabel
 
         // creating a border
@@ -326,7 +326,7 @@ public class ChickenGui extends JFrame implements ActionListener {
                 endingButton.addActionListener(this);
                 objective.setText("Chicken is happy! :D"); 
                 objective.add(endingButton);
-                objective.setIcon(new ImageIcon("ending.gif"));
+                objective.setIcon(new ImageIcon("img/ending.gif"));
             } else {
                 this.setTitle("Sad Chicken");
 
