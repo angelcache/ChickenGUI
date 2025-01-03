@@ -12,7 +12,6 @@ public class HugClothesGame extends JFrame {
         mainFrame = frame;
 
         this.add(new introPanel());
-        //this.add(new gamePanel());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
         //--this.setSize(567, 590); // 517
@@ -23,15 +22,19 @@ public class HugClothesGame extends JFrame {
     }
 
     private class introPanel extends JPanel implements ActionListener {
-        private String[] dialogue = {"Hey chicken want a hug-", 
-                                    "Geez, what happened here?! This place looks like a dump..", 
-                                    "Sorry, I'm too stinky and gross right now..",
-                                    "Go take a bath I'll help you clean up!"};
+        private String[] dialogue = {"Penguin: Hey chicken want a hug-", 
+                                    "Penguin: Geez, what happened here?! This place looks like a dump..", 
+                                    "Chicken: Sorry, I'm too stinky and gross right now..",
+                                    "Penguin: Go take a bath I'll help you clean up!"};
         private ImageIcon door = new ImageIcon("door.png");
         private ImageIcon chickensRoom = new ImageIcon("clothesGameIntro.png");
         private JLabel cutscene = new JLabel();   
         private JLabel dialogueLabel = new JLabel();                 
         private JButton transitionButton;
+        private JButton dialogueButton;
+        private int dialogueClicked = 0;
+        private ImageIcon penguinImage;
+        private ImageIcon chickenImage;
     
         public introPanel() {
             this.setBackground(new Color(0xD3C163));
@@ -41,7 +44,8 @@ public class HugClothesGame extends JFrame {
     
             transitionButton = new JButton("*knock* *knock*");
             transitionButton.setBackground(new Color(0x9E6B1D));
-            transitionButton.addActionListener(this); 
+            transitionButton.addActionListener(this);
+            transitionButton.setFocusable(false);
             transitionButton.setBounds(150, 450, 250, 50); 
             this.add(transitionButton);
     
@@ -58,15 +62,48 @@ public class HugClothesGame extends JFrame {
                 cutscene.setIcon(chickensRoom);
                 cutscene.setBounds(10, 10, 530, 530);
                 transitionButton.setVisible(false);
-                dialogueLabel.setText(dialogue[0]);
-                dialogueLabel.setBounds(90, 0, 400, 424); 
-                this.add(dialogueLabel);
-                dialogueLabel.setVisible(true);
+                this.setBackground(new Color(0xEEE7D0));
+                // Create image of penguin
+                penguinImage = new ImageIcon("penguinFrontWalking.gif");
+                chickenImage = new ImageIcon("chickenCrying.gif");
+
+                // Create a Dialogue Button
+                dialogueButton = new JButton(dialogue[0]);
+                cutscene.add(dialogueButton);
+                dialogueButton.setText(dialogue[0]);
+                dialogueButton.setForeground(Color.BLACK);
+                dialogueButton.setBackground(new Color(0xCCE8B8));
+                dialogueButton.setFocusable(false);
+                dialogueButton.addActionListener(this); 
+                dialogueButton.setVisible(true);
+                dialogueButton.setBounds(0, 380, 530, 150); 
+                dialogueButton.setIcon(penguinImage);
+            }
+
+            if (e.getSource() == dialogueButton) {
+                dialogueClicked += 1;
+                if (dialogueClicked < dialogue.length && dialogueClicked == 2) { // checks for chickens dialogue line
+                    dialogueButton.setIcon(chickenImage);
+                    dialogueButton.setText(dialogue[dialogueClicked]);
+                } else if (dialogueClicked < dialogue.length) {
+                    dialogueButton.setIcon(penguinImage);
+                    dialogueButton.setText(dialogue[dialogueClicked]);
+                } else { // check if theres no dialogue left
+                    // removes all old dialogue components from the parent frame and starts game 
+                    GamePanel gamePanel = new GamePanel();
+
+                    thisFrame.getContentPane().removeAll();  // Remove all existing components
+                    thisFrame.getContentPane().add(gamePanel); 
+                    gamePanel.setFocusable(true);
+                    gamePanel.requestFocusInWindow(); // ensures game panel receives input properly
+                    thisFrame.revalidate();
+                    thisFrame.repaint();
+                }
             }
         }
     }
 
-    private class gamePanel extends JPanel implements ActionListener{
+    private class GamePanel extends JPanel implements ActionListener{
         // width and height of game
         private static final int SCREEN_WIDTH = 550;
         private static final int SCREEN_HEIGHT = 550;
@@ -76,6 +113,7 @@ public class HugClothesGame extends JFrame {
         private static final int DELAY = 120; // how fast we want the game to be
         private int velocity = 50;
         private int movementTracker = 50; // moves the same way pink shirt would
+        private Image chickenHappy = new ImageIcon("complimented.gif").getImage();
 
         // tshirt images + their locations
         private Image pinkShirt = new ImageIcon("pinkShirt.png").getImage();
@@ -102,12 +140,13 @@ public class HugClothesGame extends JFrame {
         private JButton retryButton;
         private JButton hugButton;
 
+
         Timer timer;
 
         /**
          * The Constructor of gamePanel sets up the panel and starts the game
          */
-        public gamePanel() {
+        public GamePanel() {
             this.setBackground(new Color(0xD3C163));
             this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
             this.setFocusable(true);
@@ -341,18 +380,30 @@ public class HugClothesGame extends JFrame {
             g.setColor(new Color(0x9E6B1D));
             g.setFont(new Font("Calibri", Font.BOLD, 20));
             FontMetrics metrics = getFontMetrics(g.getFont()); // so we can put it in center
-            g.drawString("Nice! Chicken is back and thanks you, give them a hug!", ((SCREEN_WIDTH) - metrics.stringWidth("Nice! Chicken is back and thanks you, give them a hug!")) / 2, 220);
-            
+            g.drawString("Nice! Chicken is back and thanks you, give them a hug!", ((SCREEN_WIDTH) - metrics.stringWidth("Nice! Chicken is back and thanks you, give them a hug!")) / 2, 170);
+            g.drawImage(chickenHappy, 100,160, this);
         }
 
         public void draw(Graphics g) {
             if (stackedClothes == successfulStacks) { 
                 gameOver(g);
             } else if (clothesLeft > 0) {
+                drawGrids(g);
+
+                // adding game objective text
+                g.setColor(new Color(0x4F7942));
+                g.setFont(new Font("Calibri", Font.BOLD, 30));
+                FontMetrics metrics = getFontMetrics(g.getFont());
+                g.drawString("Fold 10 sets of clothes", ((SCREEN_WIDTH) - metrics.stringWidth("Fold 10 sets of clothes")) / 2, SCREEN_HEIGHT / 4);
+                
+                g.setColor(new Color(0x8a4c57));
+                g.setFont(new Font("Calibri", Font.BOLD, 12));
+                FontMetrics metrics2 = getFontMetrics(g.getFont()); 
+                g.drawString("Clothes Folded: " + (stackedClothes + 1), ((SCREEN_WIDTH) - metrics2.stringWidth("Bananas Collected: " + (stackedClothes + 1))) / 2, 40);
+
                 if (newClothes) {
                     drawFinalizedClothes(g);
                 }
-                drawGrids(g);
                 drawBaseClothes(g);
             } else {
                 drawTryAgain(g);
@@ -375,6 +426,7 @@ public class HugClothesGame extends JFrame {
                 // reset everything again
                 running = true;
                 clothesLeft = 3;
+                stackedClothes = 0;
                 finalVelocity = 0;
                 finalizedShirtXLocations.clear();
                 finalizedShirtYLocations.clear();
@@ -412,6 +464,7 @@ public class HugClothesGame extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    System.out.println("hey");
                     clothesDrop = true;
                 }
             }

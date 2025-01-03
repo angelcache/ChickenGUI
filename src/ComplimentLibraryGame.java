@@ -12,6 +12,7 @@ import java.awt.event.*;
 import java.util.Random;
 import java.util.Stack;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 /*-----------------------------------------------------------------------------------------------------------------*/
 
@@ -29,11 +30,13 @@ class ComplimentLibraryGame extends JFrame {
      */
     public ComplimentLibraryGame(ChickenGui frame) {
         this.setTitle("Learn about complimenting");
-        this.add(new LibraryPanel());
+        this.add(new LibraryDialogue());
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        ImageIcon icon = new ImageIcon("chickicon.png");
+        this.setIconImage(icon.getImage());
 
         mainFrame = frame;
         thisFrame = this;
@@ -58,6 +61,7 @@ class ComplimentLibraryGame extends JFrame {
                 mainFrame.goodEnding.setVisible(true);
                 mainFrame.setVisible(true);
                 mainFrame.setTitle("Happy Chicken");
+                mainFrame.setGameFinished();
                 mainFrame.complimentButton.setEnabled(false); // got to be at end, doesn't work at front
             }
     
@@ -73,6 +77,67 @@ class ComplimentLibraryGame extends JFrame {
                 mainFrame.setVisible(true);
             }     
         }
+
+    public class LibraryDialogue extends JPanel implements ActionListener{
+        private final String[] dialogue = {"I'm really bad at cheering people up T-T.", 
+                                        "I should stop by at the library first to run errands.",
+                                        "And maybe read a book or two about complimenting!",
+                                        "I'll have to be careful though, those librarians aren't so fond of me..."};
+        private JButton dialogueButton;
+        private ImageIcon libraryImage = new ImageIcon("library.png");
+        private ImageIcon penguingImage = new ImageIcon("penguinFrontWalking.gif");
+        private JLabel libraryLabel;
+        private int dialogueClicked = -1;
+
+        public LibraryDialogue() {
+            this.setBackground(new Color(0xEEE7D0));
+            this.setFocusable(true);
+            this.setLayout(null);
+            libraryLabel = new JLabel();
+            libraryLabel.setBounds(65, 0, 450, 424); 
+            
+            // setting up the dialogue
+            dialogueButton = new JButton(dialogue[0]);
+            dialogueButton.setForeground(Color.BLACK);
+            dialogueButton.setBackground(new Color(0xCCE8B8));
+            dialogueButton.setFocusable(false);
+            dialogueButton.addActionListener(this); 
+            dialogueButton.setVisible(true);
+            dialogueButton.setBounds(20, 392, 560, 190); 
+            dialogueButton.setIcon(penguingImage);
+            dialogueButton.addActionListener(this);
+            // setting up a border
+            Border border = BorderFactory.createLineBorder(new Color(0xD3C163), 20);
+            this.setBorder(border);
+            this.add(dialogueButton);
+            this.add(libraryLabel);
+
+            
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == dialogueButton) { // check if there is still dialogue
+                dialogueClicked++;
+                if (dialogueClicked < dialogue.length && dialogueClicked == 1) {
+                    libraryLabel.setIcon(libraryImage);
+                    dialogueButton.setText(dialogue[dialogueClicked]);
+                } else if (dialogueClicked < dialogue.length) {
+                    dialogueButton.setText(dialogue[dialogueClicked]);
+                } else {
+                    LibraryPanel libraryPanel = new LibraryPanel();
+
+                    thisFrame.getContentPane().removeAll();  // Remove all existing components
+                    thisFrame.getContentPane().add(libraryPanel); 
+                    libraryPanel.setFocusable(true);
+                    libraryPanel.requestFocusInWindow(); // ensures game panel receives input properly
+                    thisFrame.revalidate();
+                    thisFrame.repaint();
+                }
+            } 
+        }
+        
+    }
 
 /*-----------------------------------------------------------------------------------------------------------------*/
 
@@ -111,6 +176,14 @@ class ComplimentLibraryGame extends JFrame {
         private String librarian3Position = "left";
         private int librarianXVelocity3 = 1;
 
+        // Penguins space (bound box)
+        Rectangle penguinBounds = new Rectangle(penguinX * MAZE_UNITS, penguinY * MAZE_UNITS, MAZE_UNITS, MAZE_UNITS);
+        
+        // Librarians space (bound box)
+        Rectangle librarian1Bounds = new Rectangle(librarian1XY[0] * MAZE_UNITS, librarian1XY[1] * MAZE_UNITS, MAZE_UNITS, MAZE_UNITS);
+        Rectangle librarian2Bounds = new Rectangle(librarian2XY[0] * MAZE_UNITS, librarian2XY[1] * MAZE_UNITS, MAZE_UNITS, MAZE_UNITS);
+        Rectangle librarian3Bounds = new Rectangle(librarian3XY[0] * MAZE_UNITS, librarian3XY[1] * MAZE_UNITS, MAZE_UNITS, MAZE_UNITS);
+
         // kicked out of library image
         private Image badEnding = new ImageIcon("badEnding.png").getImage();
 
@@ -128,7 +201,7 @@ class ComplimentLibraryGame extends JFrame {
 
         private final int[][] maze = new int[MAZE_UNITS][MAZE_UNITS];
 
-        private static final int DELAY = 220;
+        private static final int DELAY = 160;
         private Timer timer;
         private int booksCollected = 0;
         private JButton successButton;
@@ -260,10 +333,7 @@ class ComplimentLibraryGame extends JFrame {
          * Checks to see if penguin has collided with a book or a librarian
          */
         public void checkCollisions() {
-
-            // Define penguin's bounding box
-            Rectangle penguinBounds = new Rectangle(penguinX, penguinY, 40, 40);
-
+            
             // check if penguin has collided with a book
             checkBookCollision(penguinBounds, book1XY);
             checkBookCollision(penguinBounds, book2XY);
@@ -276,10 +346,9 @@ class ComplimentLibraryGame extends JFrame {
             }
 
             // check if penguin has collided with a librarian
-            checkLibrarianCollision(penguinBounds, librarian1XY);
-            checkLibrarianCollision(penguinBounds, librarian2XY);
-            checkLibrarianCollision(penguinBounds, librarian3XY);
-        
+            checkLibrarianCollision(penguinBounds, librarian1Bounds);
+            checkLibrarianCollision(penguinBounds, librarian2Bounds);
+            checkLibrarianCollision(penguinBounds, librarian3Bounds);
         }
 
         /**
@@ -304,14 +373,11 @@ class ComplimentLibraryGame extends JFrame {
         /**
          * Checks if penguin collided with a librarian
          */
-        private void checkLibrarianCollision(Rectangle penguinBounds, int[] librarian) {
-            if (penguinX == librarian1XY[0] && penguinY == librarian1XY[1]) {
-                running = false; success = false;
-            } else if (penguinX == librarian2XY[0] && penguinY == librarian2XY[1]) {
-                running = false; success = false;
-            } else if (penguinX == librarian3XY[0] && penguinY == librarian3XY[1]) {
-                running = false; success = false;
-            } 
+        private void checkLibrarianCollision(Rectangle penguinBounds, Rectangle librarianBounds) {
+            if (penguinBounds.intersects(librarianBounds)) {
+                    running = false;
+                    success = false;
+            }
         }
 
     
@@ -452,6 +518,7 @@ class ComplimentLibraryGame extends JFrame {
             if (e.getSource() == successButton) {
                 mainFrame.complimenting = true;
                 thisFrame.setVisible(false);
+                mainFrame.setGameFinished();
                 gameOver();
             }
 
@@ -459,6 +526,10 @@ class ComplimentLibraryGame extends JFrame {
                 penguinX = 1; penguinY = 1;
                 running = true;
             }
+
+            // Penguin Movement UPdate
+            penguinBounds.setBounds(penguinX * MAZE_UNITS, penguinY * MAZE_UNITS, MAZE_UNITS, MAZE_UNITS);
+
 
             // Librarian movements
 
@@ -472,6 +543,7 @@ class ComplimentLibraryGame extends JFrame {
                 librarianXVelocity1 = librarianXVelocity1 * -1;
                 librarian1XY[0] += librarianXVelocity1;
             }
+            librarian1Bounds.setLocation(librarian1XY[0] * MAZE_UNITS, librarian1XY[1] * MAZE_UNITS);
 
             if (turn1 % 2 == 1) {
                 librarian1Position = "left";
@@ -489,6 +561,7 @@ class ComplimentLibraryGame extends JFrame {
                 librarianXVelocity2 = librarianXVelocity2 * -1;
                 librarian2XY[0] += librarianXVelocity2;
             }
+            librarian2Bounds.setLocation(librarian2XY[0] * MAZE_UNITS, librarian2XY[1] * MAZE_UNITS);
             
             if (turn2 % 2 == 1) {
                 librarian2Position = "left";
@@ -506,13 +579,14 @@ class ComplimentLibraryGame extends JFrame {
                 librarianXVelocity3 = librarianXVelocity3 * -1;
                 librarian3XY[0] += librarianXVelocity3;
             }
+            librarian3Bounds.setLocation(librarian3XY[0] * MAZE_UNITS, librarian3XY[1] * MAZE_UNITS);
             
             if (turn3 % 2 == 1) {
                 librarian3Position = "left";
             } else {
                 librarian3Position = "right";
             }
-
+            
             repaint();
         }
 
@@ -522,8 +596,10 @@ class ComplimentLibraryGame extends JFrame {
          * When keys are pressed, the penguin will move accordingly
         */
         private class TAdapter extends KeyAdapter {
+
             @Override
-            public void keyPressed(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
+                // Movement input will work for arrow pad
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
                         movePenguin(-1, 0);
@@ -542,10 +618,8 @@ class ComplimentLibraryGame extends JFrame {
                         penguinDirection = "front";
                         break;
                 }
-            }
 
-            @Override
-            public void keyTyped(KeyEvent e) {
+                // Movement input will work for a, w, s, d
                 switch (e.getKeyChar()) {
                     case 'a':
                         movePenguin(-1, 0);

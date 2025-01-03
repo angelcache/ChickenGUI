@@ -53,7 +53,7 @@ public class HugWindow extends JFrame implements MouseListener, ActionListener {
         endingButton.setVisible(false);
 
         endingButton.addActionListener(this);
-
+        
         this.add(label);
         this.add(endingButton);
         this.getContentPane().setBackground(new Color(0xEEE7D0));

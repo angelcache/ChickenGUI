@@ -48,6 +48,19 @@ public class ChickenGui extends JFrame implements ActionListener {
     AudioInputStream happyAudio;
     Clip happyClip;
 
+    // Counts if player has done all three mini games
+    private boolean[] gamesFinished = {false, false, false}; // Represent Food, Library, and Clothes game
+    JButton endingButton;
+
+    String[] endingDialogue = {"Thank you, penguin.", 
+                                "Sometimes, I get so caught up in my work,", 
+                                "that I forget to breath,",
+                                "eat some good food,", 
+                                "appreciate all I've done",
+                                "and the friends I've made along the way", 
+                                "Thank you, for sticking around :D"};
+    private int dialogueClicked = 0;
+
     public ChickenGui() throws UnsupportedAudioFileException, IOException, LineUnavailableException { 
         /* music customization */
         sadAudioFile = new File("soundForSadChicken.wav");
@@ -62,7 +75,6 @@ public class ChickenGui extends JFrame implements ActionListener {
         happyClip.open(happyAudio);
 
         /* creating a hanging out with friend button */
-        // ImageIcon buttonIcon = new ImageIcon("chickicon"); // can add image to buttons
         friendButton = new JButton(); 
         friendButton.setBounds(250, 350, 100, 50); 
 
@@ -110,7 +122,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         complimentFailLabel = new JLabel();
         ImageIcon cryingChick = new ImageIcon("sad.gif");
         complimentFailLabel.setIcon(cryingChick);
-        complimentFailLabel.setBounds(20, 0, 400, 400);
+        complimentFailLabel.setBounds(50, 0, 400, 400);
         complimentFailLabel.setVisible(false);
         this.add(complimentFailLabel);
 
@@ -130,7 +142,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         foodLabel = new JLabel();
         ImageIcon foodIcon = new ImageIcon("eating.gif");
         foodLabel.setIcon(foodIcon);
-        foodLabel.setBounds(20, -20, 500,500);
+        foodLabel.setBounds(80, -20, 500,500);
         foodLabel.setVisible(false);
         this.add(foodLabel);
 
@@ -207,6 +219,11 @@ public class ChickenGui extends JFrame implements ActionListener {
         // this.pack(); // make sure you add all components then pack 
     }
 
+    /* Increase Games Finished. Used by ComplimentWindow when complimenting game finished successfully. */
+    public void setGameFinished() {
+        gamesFinished[1] = true;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         friendButton.setVisible(false);
@@ -216,6 +233,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         if(e.getSource() == friendButton) {
             sadClip.stop();
             happyClip.start();
+            happyClip.loop(Clip.LOOP_CONTINUOUSLY);
 
             objective.setText(null);
             objective.setIcon(null);
@@ -227,16 +245,17 @@ public class ChickenGui extends JFrame implements ActionListener {
             friendLabel.setVisible(true); // after hitting button, friend image pops up
             goodEnding.setVisible(true);
             this.setTitle("Happy Chicken");
+            gamesFinished[2] = true;
         }
 
         if (e.getSource() == complimentButton) {
             sadClip.stop();
             happyClip.start();
+            happyClip.loop(Clip.LOOP_CONTINUOUSLY);
 
             friendButton.setEnabled(false); // disables button
             foodButton.setEnabled(false);
             this.dispose();
-            int complimentResult = -1;
             ComplimentLibraryGame libraryGame = new ComplimentLibraryGame(this);
             libraryGame.setVisible(false);
 
@@ -267,45 +286,79 @@ public class ChickenGui extends JFrame implements ActionListener {
             goodEnding.setVisible(true);
             
             this.setTitle("Happy Chicken");
+            gamesFinished[0] = true;
+        }
+
+        if (e.getSource() == endingButton) {
+            dialogueClicked += 1;
+
+            if (dialogueClicked < endingDialogue.length) {
+                endingButton.setText(endingDialogue[dialogueClicked]);
+            } else {
+            }
         }
 
         if (e.getSource() == resetButton) {
+            // gets rid of any of the endings you got
+            friendLabel.setVisible(false);
+                complimentFailLabel.setVisible(false);
+                complimentSuccessLabel.setVisible(false);
+                foodLabel.setVisible(false);
+                goodEnding.setVisible(false);
+
+            int success = 0;
+            for (boolean gameSuccessful: gamesFinished) {
+                if (gameSuccessful) {
+                    success++;
+                    System.out.println("game finished: " + gameSuccessful);
+                    System.out.println("success: " + success);
+                }
+            }
+
+            if (success > 2) {
+                this.remove(resetButton);
+                resetButton.setEnabled(false);
+                endingButton = new JButton(endingDialogue[0]);
+                endingButton.setForeground(Color.BLACK);
+                endingButton.setBackground(new Color(0xCCE8B8));
+                endingButton.setFocusable(false);
+                endingButton.setVisible(true);
+                endingButton.setBounds(30, 310, 343, 120); 
+                endingButton.addActionListener(this);
+                objective.setText("Chicken is happy! :D"); 
+                objective.add(endingButton);
+                objective.setIcon(new ImageIcon("ending.gif"));
+            } else {
+                this.setTitle("Sad Chicken");
+
+                // shows the options / buttons again
+                friendButton.setVisible(true);
+                complimentButton.setVisible(true);
+                complimenting = false; // reset the maze game
+                foodButton.setVisible(true);
+                friendButton.setEnabled(true);
+                complimentButton.setEnabled(true);
+                foodButton.setEnabled(true);
+
+                // shows the sad chicken and objective again [not the best way since I had to rewrite same code...]
+                objective.setText("make chicken happy :)"); 
+                objective.setHorizontalTextPosition(JLabel.CENTER); 
+                objective.setVerticalTextPosition(JLabel.TOP); 
+                objective.setForeground(new Color(0x9E6B1D)); 
+                objective.setFont(new Font("Mali", Font.BOLD, 20)); 
+
+                objective.setIconTextGap(0); 
+                objective.setVerticalAlignment(JLabel.CENTER); 
+                objective.setHorizontalAlignment(JLabel.CENTER);
+                
+                /* add image to JLabel */
+                ImageIcon chicken = new ImageIcon("sadchick.png"); // creates image
+                objective.setIcon(chicken); // adds it to JLabel
+            }
+
             happyClip.stop();
             sadClip.start();
-
-            // gets rid of any of the endings you got
-            this.setTitle("Sad Chicken");
-            friendLabel.setVisible(false);
-            complimentFailLabel.setVisible(false);
-            complimentSuccessLabel.setVisible(false);
-            foodLabel.setVisible(false);
-            goodEnding.setVisible(false);
-
-            // shows the options / buttons again
-            friendButton.setVisible(true);
-            complimentButton.setVisible(true);
-            complimenting = false; // reset the maze game
-            foodButton.setVisible(true);
-            friendButton.setEnabled(true);
-            complimentButton.setEnabled(true);
-            foodButton.setEnabled(true);
-
-            // shows the sad chicken and objective again [not the best way since I had to rewrite same code...]
-            objective.setText("make chicken happy :)"); 
-            objective.setHorizontalTextPosition(JLabel.CENTER); 
-            objective.setVerticalTextPosition(JLabel.TOP); 
-            objective.setForeground(new Color(0x9E6B1D)); 
-            objective.setFont(new Font("Mali", Font.BOLD, 20)); 
-
-            objective.setIconTextGap(0); 
-            objective.setVerticalAlignment(JLabel.CENTER); 
-            objective.setHorizontalAlignment(JLabel.CENTER);
-            
-            /* add image to JLabel */
-            ImageIcon chicken = new ImageIcon("sadchick.png"); // creates image
-            objective.setIcon(chicken); // adds it to JLabel
-
+            sadClip.loop(Clip.LOOP_CONTINUOUSLY);
         }
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }
