@@ -66,13 +66,13 @@ public class ChickenGui extends JFrame implements ActionListener {
         /* The constructor generates all the necessary components for the main menu's GUI */ 
 
         // music customization
-        sadAudioFile = new File("soundForSadChicken.wav");
+        sadAudioFile = new File("sound/soundForSadChicken.wav");
         sadAudio = AudioSystem.getAudioInputStream(sadAudioFile);
         sadClip = AudioSystem.getClip();
         sadClip.open(sadAudio);
         sadClip.start();
 
-        happyAudioFile = new File("soundForHappyChicken.wav");
+        happyAudioFile = new File("sound/soundForHappyChicken.wav");
         happyAudio = AudioSystem.getAudioInputStream(happyAudioFile);
         happyClip = AudioSystem.getClip();
         happyClip.open(happyAudio);
@@ -209,7 +209,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null); // sets location of frame to the middle of your computer screen
         this.setVisible(true);
 
-        ImageIcon image = new ImageIcon("chickicon.png");
+        ImageIcon image = new ImageIcon("img/chickicon.png");
         this.setIconImage(image.getImage()); // change icon of frame
         this.getContentPane().setBackground(new Color(0xCCE8B8));
     }
@@ -351,7 +351,7 @@ public class ChickenGui extends JFrame implements ActionListener {
                 objective.setHorizontalAlignment(JLabel.CENTER);
                 
                 /* add image to JLabel */
-                ImageIcon chicken = new ImageIcon("sadchick.png"); // creates image
+                ImageIcon chicken = new ImageIcon("img/sadchick.png"); // creates image
                 objective.setIcon(chicken); // adds it to JLabel
             }
 

@@ -53,7 +53,7 @@ public class Main {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // so now when we hit the x button it will exit the program
                 frame.setVisible(true); // makes the frame visible
 
-                ImageIcon image = new ImageIcon("chickicon.png"); // creates an image icon
+                ImageIcon image = new ImageIcon("img/chickicon.png"); // creates an image icon
                 frame.setIconImage(image.getImage()); // change icon of frame
                 frame.getContentPane().setBackground(new Color(0xCCE8B8)); // can use hexidecimal number for color of frame
 
@@ -63,7 +63,7 @@ public class Main {
         /* JPanel = a GUI component that functions as a container to hold other components
 
             // Can add Images and Label to our JPanel, we will not be adding this to our JPanels, however
-            ImageIcon icon = new ImageIcon("chickicon.png"); 
+            ImageIcon icon = new ImageIcon("img/chickicon.png"); 
             JLabel label = new JLabel(); 
             label.setText("Hi");  
             label.setIcon(icon);  
@@ -249,7 +249,7 @@ public class Main {
 
         /* Last Option Pane: combines all the rest to one 
         String[] responses = {"No, you're awesome!", "Thank you!", "*blush*", "HEHEHE"}; // array of options
-        ImageIcon icon = new ImageIcon("complimented.gif");
+        ImageIcon icon = new ImageIcon("img/complimented.gif");
         JOptionPane.showOptionDialog(null, 
                                     "you are awesome!", 
                                     "secret message", 

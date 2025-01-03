@@ -34,10 +34,10 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
         MyPanel() {
             this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
             this.setBackground(Color.pink);
-            background = new ImageIcon("BG.png").getImage();
+            background = new ImageIcon("img/BG.png").getImage();
 
             // instantiate our variables
-            banana = new ImageIcon("sadchick.png").getImage();
+            banana = new ImageIcon("img/sadchick.png").getImage();
             timer = new Timer(10, this); // perfomrs an action every 1000 milliseconds, 1 second, it will perform action performed method
             timer.start();
         }
@@ -89,7 +89,7 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
 
     private class MyPanel extends JPanel {
         public MyPanel() {
-            image = new ImageIcon("complimented.gif").getImage(); // creates an image out of the imageIcon
+            image = new ImageIcon("img/complimented.gif").getImage(); // creates an image out of the imageIcon
             this.setPreferredSize(new Dimension(500, 500)); 
             // now this entire panel is fully visible to us and the line wont start at the logo area which it did before becaus it is part of the frame
         }
@@ -256,7 +256,7 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
     import javax.swing.JPanel;
     
     public class DragPanel extends JPanel {
-        private ImageIcon image = new ImageIcon("wavingFriend.gif");
+        private ImageIcon image = new ImageIcon("img/wavingFriend.gif");
         final int WIDTH = image.getIconWidth(); // final because width will not change
         final int HEIGHT = image.getIconHeight();
         Point imageCorner;
@@ -320,10 +320,10 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
         label.addMouseListener(this);
         label.setBounds(140, 0, 500, 440);
 
-        sadIcon = new ImageIcon("sadchick.png");
-        friendIcon = new ImageIcon("friendFood.gif");
-        happyIcon = new ImageIcon("complimented.gif");
-        happyEndingIcon = new ImageIcon("friend.gif");
+        sadIcon = new ImageIcon("img/sadchick.png");
+        friendIcon = new ImageIcon("img/friendFood.gif");
+        happyIcon = new ImageIcon("img/complimented.gif");
+        happyEndingIcon = new ImageIcon("img/friend.gif");
 
         label.setIcon(sadIcon);
 
@@ -399,7 +399,7 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
         this.addKeyListener(this); // add the key listener to the frame
         this.setVisible(true);
 
-        icon = new ImageIcon("friendFood.gif");
+        icon = new ImageIcon("img/friendFood.gif");
 
         label = new JLabel();
         label.setBounds(0, 0, 1000, 1000);
@@ -591,7 +591,7 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
         exitItem.setMnemonic(KeyEvent.VK_E); // E / e for exit
 
         // you can create images for the items
-        icon = new ImageIcon("chickicon.png");
+        icon = new ImageIcon("img/chickicon.png");
         loadItem.setIcon(icon);
         saveItem.setIcon(icon);
         exitItem.setIcon(icon);
@@ -860,8 +860,8 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
         
-        xIcon = new ImageIcon("sadchick.png");
-        checkIcon = new ImageIcon("complimented.gif");
+        xIcon = new ImageIcon("img/sadchick.png");
+        checkIcon = new ImageIcon("img/complimented.gif");
 
         button = new JButton();
         button.setText("submit");
@@ -908,9 +908,9 @@ public class TestFrame extends JFrame /*implements MouseListener /*implements Ke
         this.setLayout(new FlowLayout());
 
         // can change the button image
-        pizzaIcon = new ImageIcon("chickicon.png");
-        hamburgerIcon = new ImageIcon("complimented.gif");
-        hotdogIcon = new ImageIcon("sadchick.png");
+        pizzaIcon = new ImageIcon("img/chickicon.png");
+        hamburgerIcon = new ImageIcon("img/complimented.gif");
+        hotdogIcon = new ImageIcon("img/sadchick.png");
         
         pizzaButton = new JRadioButton("Pizza");
         hamburgerButton = new JRadioButton("Hamburger");

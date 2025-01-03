@@ -8,7 +8,7 @@ import javax.swing.*;
  * clothes, counting the amount of clothes dropped properly, as well as ending the game when 0 / 3 clothes are left.
  * Images: Clothes png was made by me on Clip Studio Paint.
  /*-----------------------------------------------------------------------------------------------------------------*/
- 
+
 public class HugClothesGame extends JFrame {
     private HugClothesGame thisFrame;
     private ChickenGui mainFrame;
@@ -23,7 +23,7 @@ public class HugClothesGame extends JFrame {
         //--this.setSize(567, 590); // 517
         this.setLocationRelativeTo(null);
         this.setTitle("Fold the Clothes Neatly");
-        this.setIconImage(new ImageIcon("chickicon.png").getImage());
+        this.setIconImage(new ImageIcon("img/chickicon.png").getImage());
         this.pack();
     }
 
@@ -32,8 +32,8 @@ public class HugClothesGame extends JFrame {
                                     "Penguin: Geez, what happened here?! This place looks like a dump..", 
                                     "Chicken: Sorry, I'm too stinky and gross right now..",
                                     "Penguin: Go take a bath I'll help you clean up!"};
-        private ImageIcon door = new ImageIcon("door.png");
-        private ImageIcon chickensRoom = new ImageIcon("clothesGameIntro.png");
+        private ImageIcon door = new ImageIcon("img/door.png");
+        private ImageIcon chickensRoom = new ImageIcon("img/clothesGameIntro.png");
         private JLabel cutscene = new JLabel();   
         private JLabel dialogueLabel = new JLabel();                 
         private JButton transitionButton;
@@ -70,8 +70,8 @@ public class HugClothesGame extends JFrame {
                 transitionButton.setVisible(false);
                 this.setBackground(new Color(0xEEE7D0));
                 // Create image of penguin
-                penguinImage = new ImageIcon("penguinFrontWalking.gif");
-                chickenImage = new ImageIcon("chickenCrying.gif");
+                penguinImage = new ImageIcon("img/penguinFrontWalking.gif");
+                chickenImage = new ImageIcon("img/chickenCrying.gif");
 
                 // Create a Dialogue Button
                 dialogueButton = new JButton(dialogue[0]);
@@ -119,12 +119,12 @@ public class HugClothesGame extends JFrame {
         private static final int DELAY = 120; // how fast we want the game to be
         private int velocity = 50;
         private int movementTracker = 50; // moves the same way pink shirt would
-        private Image chickenHappy = new ImageIcon("complimented.gif").getImage();
+        private Image chickenHappy = new ImageIcon("img/complimented.gif").getImage();
 
         // tshirt images + their locations
-        private Image pinkShirt = new ImageIcon("pinkShirt.png").getImage();
-        private Image blueShirt = new ImageIcon("blueShirt.png").getImage();
-        private Image greenShirt = new ImageIcon("greenShirt.png").getImage();
+        private Image pinkShirt = new ImageIcon("img/pinkShirt.png").getImage();
+        private Image blueShirt = new ImageIcon("img/blueShirt.png").getImage();
+        private Image greenShirt = new ImageIcon("img/greenShirt.png").getImage();
         private int[] shirtXLocations = {50, 100, 150};
         private int[] shirtYLocations = {50, 50, 50};
         private int[] goalXLocations = {200, 250, 300};

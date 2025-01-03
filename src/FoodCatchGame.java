@@ -18,7 +18,7 @@ public class FoodCatchGame extends JFrame{
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
         this.pack();
-        this.setIconImage(new ImageIcon("chickicon.png").getImage());
+        this.setIconImage(new ImageIcon("img/chickicon.png").getImage());
         this.setLocationRelativeTo(null);
 
         mainFrame = frame;
@@ -72,11 +72,11 @@ public class FoodCatchGame extends JFrame{
             this.setFocusable(true);
 
             // Instantiating our penguin friend + fruits
-            penguin = new ImageIcon("friendFood.gif").getImage();
-            penguinBadEnding = new ImageIcon("friendGameOver.gif").getImage();
-            banana = new ImageIcon("banana.png").getImage();
+            penguin = new ImageIcon("img/friendFood.gif").getImage();
+            penguinBadEnding = new ImageIcon("img/friendGameOver.gif").getImage();
+            banana = new ImageIcon("img/banana.png").getImage();
             bananasCollected = 0;
-            mango = new ImageIcon("mango.png").getImage();
+            mango = new ImageIcon("img/mango.png").getImage();
 
             // instantiating buttons
             retryButton = new JButton("Retry");

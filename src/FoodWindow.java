@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 /*-----------------------------------------------------------------------------------------------------------------
  * Purpose: has the logic for the basic food question: getting the right answer leads to the food catching game
  /*-----------------------------------------------------------------------------------------------------------------*/
- 
+
 public class FoodWindow extends JFrame implements ActionListener{
     @SuppressWarnings("rawtypes")
     ChickenGui mainFrame;
@@ -47,10 +47,10 @@ public class FoodWindow extends JFrame implements ActionListener{
         this.setLayout(null);
         this.setTitle("The Kitchen");
         this.setSize(400, 200);
-        this.setIconImage(new ImageIcon("chickicon.png").getImage());
+        this.setIconImage(new ImageIcon("img/chickicon.png").getImage());
         this.setResizable(false);
 
-        ImageIcon image = new ImageIcon("chickicon.png");
+        ImageIcon image = new ImageIcon("img/chickicon.png");
         this.setIconImage(image.getImage()); // change icon of frame
         this.getContentPane().setBackground(new Color(0xCCE8B8));
         

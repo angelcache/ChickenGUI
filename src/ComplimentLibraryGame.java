@@ -31,7 +31,7 @@ class ComplimentLibraryGame extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        ImageIcon icon = new ImageIcon("chickicon.png");
+        ImageIcon icon = new ImageIcon("img/chickicon.png");
         this.setIconImage(icon.getImage());
 
         mainFrame = frame;
@@ -81,8 +81,8 @@ class ComplimentLibraryGame extends JFrame {
                                         "And maybe read a book or two about complimenting!",
                                         "I'll have to be careful though, those librarians aren't so fond of me..."};
         private JButton dialogueButton;
-        private ImageIcon libraryImage = new ImageIcon("library.png");
-        private ImageIcon penguingImage = new ImageIcon("penguinFrontWalking.gif");
+        private ImageIcon libraryImage = new ImageIcon("img/library.png");
+        private ImageIcon penguingImage = new ImageIcon("img/penguinFrontWalking.gif");
         private JLabel libraryLabel;
         private int dialogueClicked = -1;
 
@@ -151,10 +151,10 @@ class ComplimentLibraryGame extends JFrame {
 
         // penguin
         private String penguinDirection = "front";
-        private Image penguinFront = new ImageIcon("penguinFrontWalking.gif").getImage();
-        private Image penguinBack = new ImageIcon("penguinBackWalking.gif").getImage();
-        private Image penguinLeft = new ImageIcon("penguinLeftWalking.gif").getImage();
-        private Image penguinRight = new ImageIcon("penguinRightWalking.gif").getImage();
+        private Image penguinFront = new ImageIcon("img/penguinFrontWalking.gif").getImage();
+        private Image penguinBack = new ImageIcon("img/penguinBackWalking.gif").getImage();
+        private Image penguinLeft = new ImageIcon("img/penguinLeftWalking.gif").getImage();
+        private Image penguinRight = new ImageIcon("img/penguinRightWalking.gif").getImage();
 
         // 3 librarian npc's / enemies
 
@@ -162,18 +162,18 @@ class ComplimentLibraryGame extends JFrame {
         private int[] librarian2XY = {11, 3};
         private int[] librarian3XY = {7, 11};
 
-        private Image librarian1Left = new ImageIcon("librarianLeftWalking.gif").getImage();
-        private Image librarian1Right = new ImageIcon("librarianRightWalking.gif").getImage();
+        private Image librarian1Left = new ImageIcon("img/librarianLeftWalking.gif").getImage();
+        private Image librarian1Right = new ImageIcon("img/librarianRightWalking.gif").getImage();
         private String librarian1Position = "right";
         private int librarianXVelocity1 = 1;
 
-        private Image librarian2Left = new ImageIcon("librarianLeftWalking.gif").getImage();
-        private Image librarian2Right = new ImageIcon("librarianRightWalking.gif").getImage();
+        private Image librarian2Left = new ImageIcon("img/librarianLeftWalking.gif").getImage();
+        private Image librarian2Right = new ImageIcon("img/librarianRightWalking.gif").getImage();
         private String librarian2Position = "right";
         private int librarianXVelocity2 = 1;
 
-        private Image librarian3Left = new ImageIcon("librarianLeftWalking.gif").getImage();
-        private Image librarian3Right = new ImageIcon("librarianRightWalking.gif").getImage();
+        private Image librarian3Left = new ImageIcon("img/librarianLeftWalking.gif").getImage();
+        private Image librarian3Right = new ImageIcon("img/librarianRightWalking.gif").getImage();
         private String librarian3Position = "left";
         private int librarianXVelocity3 = 1;
 
@@ -186,7 +186,7 @@ class ComplimentLibraryGame extends JFrame {
         Rectangle librarian3Bounds = new Rectangle(librarian3XY[0] * MAZE_UNITS, librarian3XY[1] * MAZE_UNITS, MAZE_UNITS, MAZE_UNITS);
 
         // kicked out of library image
-        private Image badEnding = new ImageIcon("badEnding.png").getImage();
+        private Image badEnding = new ImageIcon("img/badEnding.png").getImage();
 
         int turn1 = 0; // even is right, odd is left
         int turn2 = 0;
@@ -195,9 +195,9 @@ class ComplimentLibraryGame extends JFrame {
         private int[] book1XY = {0, 0};
         private int[] book2XY = {0, 0};
         private int[] book3XY = {0, 0};
-        private Image book = new ImageIcon("book.gif").getImage();
-        private Image book2 = new ImageIcon("book.gif").getImage();
-        private Image book3 = new ImageIcon("book.gif").getImage();
+        private Image book = new ImageIcon("img/book.gif").getImage();
+        private Image book2 = new ImageIcon("img/book.gif").getImage();
+        private Image book3 = new ImageIcon("img/book.gif").getImage();
         private Random random;
 
         private final int[][] maze = new int[MAZE_UNITS][MAZE_UNITS];

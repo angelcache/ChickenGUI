@@ -37,7 +37,7 @@ public class ComplimentWindow {
         panel.add(Box.createVerticalGlue()); // Add vertical glue for centering
         
         // create icon and text for the Option Dialog
-        ImageIcon sadChick = new ImageIcon("sadchick.png");
+        ImageIcon sadChick = new ImageIcon("img/sadchick.png");
         String[] complimentOptions = {"You looking kinda crusty >:)", "Are you a chick? Because you're impecabble :)", "I love to eat chicken nuggets <3"};
         answer = JOptionPane.showOptionDialog(null, 
                                               panel,
