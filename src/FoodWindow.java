@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -9,6 +8,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Purpose: has the logic for the basic food question: getting the right answer leads to the food catching game
+ /*-----------------------------------------------------------------------------------------------------------------*/
+ 
 public class FoodWindow extends JFrame implements ActionListener{
     @SuppressWarnings("rawtypes")
     ChickenGui mainFrame;

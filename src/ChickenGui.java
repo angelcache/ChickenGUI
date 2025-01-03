@@ -12,57 +12,60 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Purpose: Main Menu of the game that lets you choose which of the three mini games you will play. It also designs
+ *          the main menu and tells the player the objective of the game: to make Chicken feel better. The main menu
+ *          is also where the player will be taken after sucessfuly completing the game. It shows the ending of each
+ *          mini game and if 3/3 mini games are completed, the secret ending will be unlocked.
+ * Images: The chicken gifs I used for the endings were from tenor. The music is made by 茶葉のぎか on youtube.
+/*-----------------------------------------------------------------------------------------------------------------*/
+
 public class ChickenGui extends JFrame implements ActionListener { 
-    /* This class is my attempt at learning and implementing what I learnt by making a little 
-    *  chicken GUI. In this GUI, you are given a tasks to make a sad and overworked chick happy and are given 
-    *  some options to do so. The chicken gifs I used were from tenor. The music is made by 茶葉のぎか on youtube.
-    */
 
-    // extends makes MyFrame a sublass of parent class Jframe
-    // implement adds a method from ActionListener
+    /* Some variables will be used by Library Game */
+    public JButton friendButton;
+    public JLabel friendLabel; // label that makes friend pop up after clicking button to hang out
+    public  JButton complimentButton;
+    public boolean complimenting = false;
+    public JLabel complimentSuccessLabel;
+    public JLabel complimentFailLabel;
 
-    JButton friendButton;
-    JLabel friendLabel; // label that makes friend pop up after clicking button to hang out
+    public JButton foodButton;
+    public  JLabel foodLabel;
 
-    JButton complimentButton;
-    boolean complimenting = false;
-    JLabel complimentSuccessLabel;
-    JLabel complimentFailLabel;
-
-    JButton foodButton;
-    JLabel foodLabel;
-
-    JButton resetButton;
+    private JButton resetButton;
     
-    JLabel objective; // label that has the objective of GUI which is to make chicken happy
-    JLabel goodEnding;
-    JLabel badEnding;
+    public JLabel objective; // label that has the objective of GUI which is to make chicken happy
+    public JLabel goodEnding;
+    public JLabel badEnding;
 
     // for the sad music
-    File sadAudioFile;
-    AudioInputStream sadAudio;
-    Clip sadClip;
+    private final File sadAudioFile;
+    private final AudioInputStream sadAudio;
+    private final Clip sadClip;
 
     // for the happy music
-    File happyAudioFile;
-    AudioInputStream happyAudio;
-    Clip happyClip;
+    private final File happyAudioFile;
+    private final AudioInputStream happyAudio;
+    private final Clip happyClip;
 
     // Counts if player has done all three mini games
     private boolean[] gamesFinished = {false, false, false}; // Represent Food, Library, and Clothes game
-    JButton endingButton;
+    private JButton endingButton;
 
-    String[] endingDialogue = {"Thank you, penguin.", 
-                                "Sometimes, I get so caught up in my work,", 
-                                "that I forget to breath,",
-                                "eat some good food,", 
-                                "appreciate all I've done",
-                                "and the friends I've made along the way", 
-                                "Thank you, for sticking around :D"};
+    String[] endingDialogue = {"Chicken: Thank you, penguin.", 
+                                "Chicken: Sometimes, I get so caught up in my work,", 
+                                "Chicken: that I forget to breath,",
+                                "Chicken: eat some good food,", 
+                                "Chicken: appreciate all I've done",
+                                "Chicken: and the friends I've made along the way", 
+                                "Chicken: Thank you, for sticking around :D"};
     private int dialogueClicked = 0;
 
-    public ChickenGui() throws UnsupportedAudioFileException, IOException, LineUnavailableException { 
-        /* music customization */
+    public ChickenGui() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        /* The constructor generates all the necessary components for the main menu's GUI */ 
+
+        // music customization
         sadAudioFile = new File("soundForSadChicken.wav");
         sadAudio = AudioSystem.getAudioInputStream(sadAudioFile);
         sadClip = AudioSystem.getClip();
@@ -74,14 +77,13 @@ public class ChickenGui extends JFrame implements ActionListener {
         happyClip = AudioSystem.getClip();
         happyClip.open(happyAudio);
 
-        /* creating a hanging out with friend button */
+        // creating a hanging out with friend button
         friendButton = new JButton(); 
         friendButton.setBounds(250, 350, 100, 50); 
 
-        /*customizing the button*/
+        // customizing the friend button
         friendButton.setText("Give Hug");
         friendButton.setFocusable(false); // removes random border around text
-        // button.setIcon(buttonIcon); button.setIconTextGap(); 
         friendButton.setHorizontalTextPosition(JButton.CENTER);
         friendButton.setVerticalTextPosition(JButton.CENTER); 
         friendButton.setFont(new Font("Mali", Font.BOLD, 12)); 
@@ -90,7 +92,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         friendButton.setBorder(BorderFactory.createEtchedBorder()); // gives a 3d effect to the button
         this.add(friendButton); 
 
-        /* display a label on our frame after clicking friend button */
+        // display a label on our frame after clicking friend button
         friendLabel = new JLabel();
         ImageIcon friend = new ImageIcon("friend.gif");
         friendLabel.setIcon(friend);
@@ -98,9 +100,8 @@ public class ChickenGui extends JFrame implements ActionListener {
         friendLabel.setVisible(false);
         this.add(friendLabel);
         friendButton.addActionListener(this); // friend now pops up after button is hit
-        // button.addActionListener(e -> System.out.println("poo")); // action listener lamda expression shortcut
 
-        /* Creating a complimenting the chicken button */
+        // Creating a complimenting the chicken button
         complimentButton = new JButton();
         complimentButton.setBounds(150, 350, 100, 50);
         complimentButton.setText("Compliment");
@@ -111,7 +112,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         complimentButton.setBorder(BorderFactory.createEtchedBorder());
         this.add(complimentButton);
 
-        /* getting the image of good and bad endings of complimenting chicken */
+        // Getting the image of good and bad endings of complimenting chicken game
         complimentSuccessLabel = new JLabel();
         ImageIcon complimentedChick = new ImageIcon("complimented.gif");
         complimentSuccessLabel.setIcon(complimentedChick);
@@ -128,7 +129,7 @@ public class ChickenGui extends JFrame implements ActionListener {
 
         complimentButton.addActionListener(this);
 
-        /* Adding in the giving food to chicken button */
+        // Adding in the giving food to chicken button
         foodButton = new JButton();
         foodButton.setBounds(50, 350, 100, 50);
         foodButton.setText("Give Food");
@@ -148,7 +149,7 @@ public class ChickenGui extends JFrame implements ActionListener {
 
         foodButton.addActionListener(this);
 
-        /* Making a reset button */
+        // Making a reset button
         resetButton =  new JButton();
         resetButton.setBounds(150, 350, 100, 50);
         resetButton.setText("Reset");
@@ -160,30 +161,29 @@ public class ChickenGui extends JFrame implements ActionListener {
         this.add(resetButton);
         resetButton.addActionListener(this);
 
-        /* Creating the Objective Label */
+        // Creating the Objective Label
         objective = new JLabel(); // creates label
         objective.setText("make chicken happy :)"); // set text of label
 
-        /* customizing text of Objective JLabel */
+        // customizing text of Objective JLabel
         objective.setHorizontalTextPosition(JLabel.CENTER); // set text LEFT, CENTER, RIGHT of ImageIcon
         objective.setVerticalTextPosition(JLabel.TOP); // set text TOP,CENTER,BOTTOM of ImageIcon
         objective.setForeground(new Color(0x9E6B1D)); // sets color of text
         objective.setFont(new Font("Mali", Font.BOLD, 20)); // sets font of text
 
         objective.setIconTextGap(0); // set gap of text to image
-        // objective.setBackground(Color.black); // set background color
-        // objective.setOpaque(true); // to display background color
         objective.setVerticalAlignment(JLabel.CENTER); // set vertical position of icon + text within label
         objective.setHorizontalAlignment(JLabel.CENTER); // set horizontal position of icon + text within label
         
-        /* add sad chicken image to Objective */
+        // add sad chicken image to Objective
         ImageIcon chicken = new ImageIcon("sadchick.png"); // creates image
         objective.setIcon(chicken); // adds it to JLabel
+
         // creating a border
         Border border = BorderFactory.createLineBorder(new Color(0xEEE7D0), 30);
         objective.setBorder(border);
         
-        /* Ending Jlabel - text after good or bad ending */
+        // Ending Jlabel - text after good or bad ending */
         goodEnding = new JLabel("Chicken is now happy :D");
         goodEnding.setBounds(88,0, 400, 148);
         goodEnding.setForeground(new Color(0xEFFF7F)); // sets color of text
@@ -201,7 +201,7 @@ public class ChickenGui extends JFrame implements ActionListener {
         this.add(goodEnding);
         this.add(objective); // adds the objective label w/ text + image we made earlier
 
-        /* JFrame customization */
+        // JFrame customization
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Sad Chicken");
         this.setSize(420,500);
@@ -212,20 +212,19 @@ public class ChickenGui extends JFrame implements ActionListener {
         ImageIcon image = new ImageIcon("chickicon.png");
         this.setIconImage(image.getImage()); // change icon of frame
         this.getContentPane().setBackground(new Color(0xCCE8B8));
-        // this.setLayout(null); // wont show the labels 
-        // objective.setBounds(0, 0 , 400, 250); // determines whole labels parameter
-        
-        /* another way to change labels parameter */
-        // this.pack(); // make sure you add all components then pack 
     }
 
-    /* Increase Games Finished. Used by ComplimentWindow when complimenting game finished successfully. */
     public void setGameFinished() {
+        /* Increase Games Finished variable. Used by ComplimentWindow when complimenting game finished successfully. */
         gamesFinished[1] = true;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        /* Ensures clicking the buttons leads to desired game, retry button resets the options 
+           and tracks succesful attempts. It also sets up the good endings for when the player
+           sucessfully finishes the game. */
+
         friendButton.setVisible(false);
         complimentButton.setVisible(false);
         foodButton.setVisible(false);

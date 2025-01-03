@@ -1,6 +1,10 @@
 
 import javax.swing.*;
 
+/*-----------------------------------------------------------------------------------------------------------------
+*  Purpose: Contains some more code learnt from the Bro Code Java Swing tutorial video.
+/*-----------------------------------------------------------------------------------------------------------------*/
+
 public class TestFrame extends JFrame /*implements MouseListener /*implements KeyListener*/ /*implements ActionListener*/ /*implements ChangeListener */ {
     /* Creating 2D animations in Java using method paint(Graphics g) and Graphics2D*/
     

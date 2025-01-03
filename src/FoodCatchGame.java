@@ -3,6 +3,11 @@ import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Purpose: has the logic for the food catching game: includes drawing the GUI elements and collision detection
+ * Images: Penguin jumping gif was from Tenor
+ /*-----------------------------------------------------------------------------------------------------------------*/
+
 public class FoodCatchGame extends JFrame{
     ChickenGui mainFrame;
     FoodCatchGame foodFrame;
@@ -311,4 +316,3 @@ public class FoodCatchGame extends JFrame{
         }
     }
 }
-

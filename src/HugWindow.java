@@ -10,6 +10,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Purpose: contains the window for hugging chicken. Window was made to showcase what I learn about mouse listener.
+ * Images: Gifs were from Tenor.
+/*-----------------------------------------------------------------------------------------------------------------*/
+
 public class HugWindow extends JFrame implements MouseListener, ActionListener {
     ChickenGui mainFrame;
     JLabel label;

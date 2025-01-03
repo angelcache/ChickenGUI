@@ -1,12 +1,3 @@
-/*
- * Purpose: Penguin goes to the library to learn more about how to compliment chicken. The game will be a maze
- *          through the library where penguin must collect 3 books that will help him learn how to be a good
- *          comforter when a friend is not in the best mood.
- * Images: penguin walking and book gifs were made by me on Piskel, bad ending image made on clip studio paint
- */
-
-/*-----------------------------------------------------------------------------------------------------------------*/
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
@@ -14,7 +5,12 @@ import java.util.Stack;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-/*-----------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------------------
+ * Purpose: Penguin goes to the library to learn more about how to compliment chicken. This codes the library
+ *          game where penguin must collect 3 books that will help him learn how to be a cheer up a friend 
+ *          who is not in the best mood.
+ * Images: Penguin walking, book gifs, and bad ending image were made by me in Piskel and in Clip Studio Paint
+ /*-----------------------------------------------------------------------------------------------------------------*/
 
 class ComplimentLibraryGame extends JFrame {
     private ChickenGui mainFrame;
@@ -25,10 +21,10 @@ class ComplimentLibraryGame extends JFrame {
     private boolean running = false;
     private boolean success = false;
 
-    /**
-     * Library Game constructor generates the frame and customizes it
-     */
     public ComplimentLibraryGame(ChickenGui frame) {
+        /**
+        * Library Game constructor generates the frame and customizes it
+        */
         this.setTitle("Learn about complimenting");
         this.add(new LibraryDialogue());
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -42,41 +38,42 @@ class ComplimentLibraryGame extends JFrame {
         thisFrame = this;
     }
 
-    /**
+    
+    public void gameOver() {
+        /**
          * ends the game and starts the complimenting window
          */
-        public void gameOver() {
-            ComplimentWindow window = new ComplimentWindow();
-            int complimentResult = window.Result();
+        ComplimentWindow window = new ComplimentWindow();
+        int complimentResult = window.Result();
                 
     
-            // complimented chicken
-            if (complimentResult == 1) { 
-                mainFrame.friendButton.setEnabled(false);
-                mainFrame.badEnding.setVisible(false);
-                mainFrame.complimentFailLabel.setVisible(false);
-                mainFrame.complimentSuccessLabel.setVisible(true);
-                mainFrame.objective.setText(null);
-                mainFrame.objective.setIcon(null);
-                mainFrame.goodEnding.setVisible(true);
-                mainFrame.setVisible(true);
-                mainFrame.setTitle("Happy Chicken");
-                mainFrame.setGameFinished();
-                mainFrame.complimentButton.setEnabled(false); // got to be at end, doesn't work at front
-            }
-    
-            // insulted chicken
-            if (complimentResult == 0 ||  complimentResult == 2) { 
-                mainFrame.friendButton.setVisible(true);
-                mainFrame.complimentButton.setVisible(true);
-                mainFrame.foodButton.setVisible(true);
-                mainFrame.badEnding.setVisible(true);
-                mainFrame.complimentFailLabel.setVisible(true);
-                mainFrame.objective.setText(null);
-                mainFrame.objective.setIcon(null);
-                mainFrame.setVisible(true);
-            }     
+        // complimented chicken
+        if (complimentResult == 1) { 
+            mainFrame.friendButton.setEnabled(false);
+            mainFrame.badEnding.setVisible(false);
+            mainFrame.complimentFailLabel.setVisible(false);
+            mainFrame.complimentSuccessLabel.setVisible(true);
+            mainFrame.objective.setText(null);
+            mainFrame.objective.setIcon(null);
+            mainFrame.goodEnding.setVisible(true);
+            mainFrame.setVisible(true);
+            mainFrame.setTitle("Happy Chicken");
+            mainFrame.setGameFinished();
+            mainFrame.complimentButton.setEnabled(false); // got to be at end, doesn't work at front
         }
+    
+        // insulted chicken
+        if (complimentResult == 0 ||  complimentResult == 2) { 
+            mainFrame.friendButton.setVisible(true);
+            mainFrame.complimentButton.setVisible(true);
+            mainFrame.foodButton.setVisible(true);
+            mainFrame.badEnding.setVisible(true);
+            mainFrame.complimentFailLabel.setVisible(true);
+            mainFrame.objective.setText(null);
+            mainFrame.objective.setIcon(null);
+            mainFrame.setVisible(true);
+        }     
+    }
 
     public class LibraryDialogue extends JPanel implements ActionListener{
         private final String[] dialogue = {"I'm really bad at cheering people up T-T.", 
@@ -90,6 +87,9 @@ class ComplimentLibraryGame extends JFrame {
         private int dialogueClicked = -1;
 
         public LibraryDialogue() {
+            /**
+            * Library Dialogue constructor generates the dialogue label and customizes it
+            */
             this.setBackground(new Color(0xEEE7D0));
             this.setFocusable(true);
             this.setLayout(null);
@@ -111,12 +111,13 @@ class ComplimentLibraryGame extends JFrame {
             this.setBorder(border);
             this.add(dialogueButton);
             this.add(libraryLabel);
-
-            
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            /**
+            * changes the dialogue and dialogue image when the button is clicked
+            */
             if (e.getSource() == dialogueButton) { // check if there is still dialogue
                 dialogueClicked++;
                 if (dialogueClicked < dialogue.length && dialogueClicked == 1) {

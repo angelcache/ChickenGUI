@@ -3,6 +3,12 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
+/*-----------------------------------------------------------------------------------------------------------------
+ * Purpose: contains the logic for the clothes games dialogue and the game's logic and GUI: includes drawing and dropping
+ * clothes, counting the amount of clothes dropped properly, as well as ending the game when 0 / 3 clothes are left.
+ * Images: Clothes png was made by me on Clip Studio Paint.
+ /*-----------------------------------------------------------------------------------------------------------------*/
+ 
 public class HugClothesGame extends JFrame {
     private HugClothesGame thisFrame;
     private ChickenGui mainFrame;

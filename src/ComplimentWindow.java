@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.Box;
@@ -8,13 +7,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
-// import java.awt.Font;
-// import javax.swing.JFrame;
-// import javax.swing.JLabel;
+/*-----------------------------------------------------------------------------------------------------------------
+ * Purpose: After finishing the library game, player is taken to the compliment window where they are 
+ *          given three options to compliment chicken. 1 /3 endings are good and will return a happy
+ *          ending, otherwise compliment window will return a bad ending to ChickenGui.java
+ * Images: The chicken gif I used is from tenor.
+/*-----------------------------------------------------------------------------------------------------------------*/
 
 public class ComplimentWindow {
-    // This class is part of the Chicken GUI, it gives you multiple options to compliment the chicken, used JOptionPane
+    /* This class gives you multiple options to compliment the chicken, using JOptionPane */
 
     private int answer;
     
@@ -57,5 +58,4 @@ public class ComplimentWindow {
                 return 2; // 2 is bad option
         }
     }
-    
 }

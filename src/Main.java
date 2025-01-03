@@ -5,8 +5,37 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
+/*-----------------------------------------------------------------------------------------------------------------
+*  Purpose: This mini GUI project is my attempt at learning and implementing what I learnt from Bro Code's java swing 
+*  tutorial by making a little chicken GUI. In this GUI, you are given a tasks to make a sad and overworked chicken 
+*  happy and are given some options to do so. The main class initializes the game but also contains commented out 
+*  code learnt from Bro Code's tutorial.
+/*-----------------------------------------------------------------------------------------------------------------*/
+
 public class Main {
     public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+
+        // Creating JPanels for chicken GUI game
+        JPanel wallShadow = new JPanel(); // creates new panel
+        wallShadow.setBackground(new Color(0xD3C163)); // set colour of panel
+        wallShadow.setBounds(0, 0, 250, 255); // set size of panel
+
+        JPanel wall = new JPanel();
+        wall.setBackground(new Color(0xE6DC77));
+        wall.setBounds(0, 0, 450, 320);
+
+        JPanel greenForeground = new JPanel();
+        greenForeground.setBackground(new Color(0xCCE8B8));
+        greenForeground.setBounds(0,250, 250, 250);
+        // panelThree.setLayout(new BorderLayout()); this is a border layout, another way to determine where text should go
+        // label.setBounds(0, 0, 200, 200); // sets where text goes
+        // panelThree.add(label); // adds text + image to the panel
+        
+        ChickenGui frame = new ChickenGui();
+        frame.add(wallShadow);
+        frame.add(wall);
+        frame.add(greenForeground);
+
         /* Basics of making a GUI
             
             import java.awt.Color; // this import is needed to change a frames color
@@ -41,27 +70,6 @@ public class Main {
             label.setVerticalAlignment(JLabel.CENTER); 
             label.setHorizontalAlignment(JLabel.CENTER); // would use if we were using borderlayout
         */
-
-        // Creating JPanels for sadchicken GUI
-        JPanel wallShadow = new JPanel(); // creates new panel
-        wallShadow.setBackground(new Color(0xD3C163)); // set colour of panel
-        wallShadow.setBounds(0, 0, 250, 255); // set size of panel
-
-        JPanel wall = new JPanel();
-        wall.setBackground(new Color(0xE6DC77));
-        wall.setBounds(0, 0, 450, 320);
-
-        JPanel greenForeground = new JPanel();
-        greenForeground.setBackground(new Color(0xCCE8B8));
-        greenForeground.setBounds(0,250, 250, 250);
-        // panelThree.setLayout(new BorderLayout()); this is a border layout, another way to determine where text should go
-        // label.setBounds(0, 0, 200, 200); // sets where text goes
-        // panelThree.add(label); // adds text + image to the panel
-        
-        ChickenGui frame = new ChickenGui();
-        frame.add(wallShadow);
-        frame.add(wall);
-        frame.add(greenForeground);
 
         /* Next we learn about border layout
          * Layout manager = Defines tha natural layout for components within a container [3 types]
